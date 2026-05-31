@@ -30,7 +30,7 @@ export const Navbar: React.FC = () => {
             VASUNDHARA
           </h1>
           <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold tracking-wider mt-0.5 uppercase">
-            GOVERNMENT OF INDIA • LAND RECORDS AND AUDITING
+            LAND RECORDS AND AUDITING
           </p>
         </div>
       </div>
