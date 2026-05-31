@@ -16,6 +16,24 @@ const fullSchema = z.object({
     .string()
     .toUpperCase()
     .regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, "PAN must be a valid format (e.g., ABCDE1234F)"),
+  samagraId: z
+    .string()
+    .regex(/^\d{9}$/, "Samagra ID must be exactly 9 digits")
+    .optional()
+    .or(z.literal("")),
+  gender: z.string().optional().or(z.literal("")),
+  farmerCategory: z.string().optional().or(z.literal("")),
+  bankAccountNo: z
+    .string()
+    .regex(/^\d{9,18}$/, "Bank Account must be 9 to 18 digits")
+    .optional()
+    .or(z.literal("")),
+  ifscCode: z
+    .string()
+    .toUpperCase()
+    .regex(/^[A-Z]{4}0[A-Z0-9]{6}$/, "IFSC must be standard (e.g. SBIN0001234)")
+    .optional()
+    .or(z.literal("")),
   jila: z.string().min(1, "Jila is required").trim(),
   tehsil: z.string().min(1, "Tehsil is required").trim(),
   gao: z.string().min(1, "Village (Gao) is required").trim(),
@@ -54,6 +72,11 @@ export const EditUser: React.FC = () => {
       mobile: "",
       aadhar: "",
       pan: "",
+      samagraId: "",
+      gender: "",
+      farmerCategory: "",
+      bankAccountNo: "",
+      ifscCode: "",
       jila: "",
       tehsil: "",
       gao: "",
@@ -80,6 +103,11 @@ export const EditUser: React.FC = () => {
             mobile: user.mobile,
             aadhar: user.aadhar,
             pan: user.pan,
+            samagraId: user.samagraId || "",
+            gender: user.gender || "",
+            farmerCategory: user.farmerCategory || "",
+            bankAccountNo: user.bankAccountNo || "",
+            ifscCode: user.ifscCode || "",
             jila: user.jila,
             tehsil: user.tehsil,
             gao: user.gao,
@@ -115,6 +143,7 @@ export const EditUser: React.FC = () => {
     setIsSaving(true);
     try {
       values.pan = values.pan.toUpperCase();
+      if (values.ifscCode) values.ifscCode = values.ifscCode.toUpperCase();
       const response = await apiUpdateUser(id, values);
       if (response.success) {
         toast.success("Registry record updated successfully");
@@ -269,6 +298,119 @@ export const EditUser: React.FC = () => {
               {errors.pan && (
                 <p className="text-red-650 dark:text-red-400 text-xs font-bold mt-1 uppercase">
                   {errors.pan.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
+                Samagra ID (9 Digits)
+              </label>
+              <input
+                type="text"
+                maxLength={9}
+                disabled={isSaving}
+                className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-808 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
+                placeholder="e.g. 123456789"
+                {...register("samagraId")}
+                onChange={(e) => {
+                  setValue("samagraId", e.target.value.replace(/\D/g, ""));
+                  trigger("samagraId");
+                }}
+              />
+              {errors.samagraId && (
+                <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">
+                  {errors.samagraId.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
+                Gender
+              </label>
+              <select
+                disabled={isSaving}
+                className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-808 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
+                {...register("gender")}
+              >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+              {errors.gender && (
+                <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">
+                  {errors.gender.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
+                Farmer Category
+              </label>
+              <select
+                disabled={isSaving}
+                className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-808 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
+                {...register("farmerCategory")}
+              >
+                <option value="">Select Category</option>
+                <option value="Marginal">Marginal</option>
+                <option value="Small">Small</option>
+                <option value="Semi-Medium">Semi-Medium</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+              </select>
+              {errors.farmerCategory && (
+                <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">
+                  {errors.farmerCategory.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
+                Bank Account Number
+              </label>
+              <input
+                type="text"
+                maxLength={18}
+                disabled={isSaving}
+                className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-808 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
+                placeholder="e.g. 123456789012"
+                {...register("bankAccountNo")}
+                onChange={(e) => {
+                  setValue("bankAccountNo", e.target.value.replace(/\D/g, ""));
+                  trigger("bankAccountNo");
+                }}
+              />
+              {errors.bankAccountNo && (
+                <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">
+                  {errors.bankAccountNo.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
+                Bank IFSC Code
+              </label>
+              <input
+                type="text"
+                maxLength={11}
+                disabled={isSaving}
+                className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-808 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white font-mono uppercase transition-all"
+                placeholder="e.g. SBIN0001234"
+                {...register("ifscCode")}
+                onChange={(e) => {
+                  setValue("ifscCode", e.target.value.toUpperCase());
+                  trigger("ifscCode");
+                }}
+              />
+              {errors.ifscCode && (
+                <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">
+                  {errors.ifscCode.message}
                 </p>
               )}
             </div>

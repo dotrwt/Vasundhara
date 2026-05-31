@@ -116,6 +116,36 @@ export const ViewUser: React.FC = () => {
                 {user.pan}
               </dd>
             </div>
+            <div className="border-b border-gray-100 dark:border-gray-800 pb-2">
+              <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Samagra ID</dt>
+              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5">
+                {user.samagraId || "N/A"}
+              </dd>
+            </div>
+            <div className="border-b border-gray-100 dark:border-gray-800 pb-2">
+              <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Gender</dt>
+              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5">
+                {user.gender || "N/A"}
+              </dd>
+            </div>
+            <div className="border-b border-gray-100 dark:border-gray-800 pb-2">
+              <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Farmer Category</dt>
+              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5">
+                {user.farmerCategory || "N/A"}
+              </dd>
+            </div>
+            <div className="border-b border-gray-100 dark:border-gray-800 pb-2">
+              <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Bank Account No</dt>
+              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5 font-mono">
+                {user.bankAccountNo || "N/A"}
+              </dd>
+            </div>
+            <div className="border-b border-gray-100 dark:border-gray-800 pb-2">
+              <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Bank IFSC Code</dt>
+              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5 font-mono uppercase">
+                {user.ifscCode || "N/A"}
+              </dd>
+            </div>
           </dl>
         </div>
 

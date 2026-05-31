@@ -25,6 +25,11 @@ export interface IUser extends Document {
   mobile: string;
   aadhar: string;
   pan: string;
+  samagraId?: string;
+  gender?: string;
+  farmerCategory?: string;
+  bankAccountNo?: string;
+  ifscCode?: string;
   jila: string;
   tehsil: string;
   gao: string;
@@ -35,3 +40,18 @@ export interface IUser extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface IDmrAc extends Document {
+  farmerName: string;
+  farmerId?: Types.ObjectId;
+  kharifCash: number;
+  kharifKind: number;
+  rabiCash: number;
+  rabiKind: number;
+  remarks?: string;
+  createdBy: Types.ObjectId;
+  updatedBy?: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
+

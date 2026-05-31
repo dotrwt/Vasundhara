@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vasundhara — Land Registry Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --earth: #2C4A1E;
+      --earth-mid: #3D6B2A;
+      --earth-light: #6B9E52;
+      --gold: #C49A2B;
+      --gold-light: #E8C96A;
+      --cream: #F5F0E8;
+      --cream-dark: #EAE2D0;
+      --ink: #1A1A0F;
+      --muted: #6B6B5A;
+      --border: rgba(44,74,30,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(245,240,232,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 600;
+      color: var(--earth); letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 400; letter-spacing: 0.06em;
+      color: var(--muted); text-decoration: none; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--earth); }
+    .nav-cta {
+      padding: 0.55rem 1.4rem;
+      background: var(--earth);
+      color: var(--cream) !important;
+      border-radius: 3px;
+      font-weight: 500 !important;
+      color: var(--cream) !important;
+    }
+    .nav-cta:hover { background: var(--earth-mid); color: var(--cream) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-pattern {
+      position: absolute; inset: 0; opacity: 0.035; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232C4A1E' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 5rem 3rem 5rem 5rem;
+      animation: fadeUp 0.9s ease both;
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+      display: flex; align-items: center; gap: 0.7rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 28px; height: 1px; background: var(--gold);
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 600; line-height: 1.1;
+      color: var(--earth); margin-bottom: 0.2rem;
+    }
+    h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: 1.05rem; font-weight: 300; line-height: 1.7;
+      color: var(--muted); max-width: 480px;
+      margin: 1.5rem 0 2.5rem;
+    }
+    .hero-actions { display: flex; align-items: center; gap: 1.2rem; }
+    .btn-primary {
+      padding: 0.9rem 2.2rem;
+      background: var(--earth);
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.88rem; font-weight: 500; letter-spacing: 0.04em;
+      border-radius: 3px;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--earth-mid); transform: translateY(-1px); }
+    .btn-ghost {
+      color: var(--earth); font-size: 0.88rem; font-weight: 400;
+      text-decoration: none; letter-spacing: 0.04em;
+      display: flex; align-items: center; gap: 0.4rem;
+      transition: gap 0.2s;
+    }
+    .btn-ghost:hover { gap: 0.7rem; }
+    .btn-ghost::after { content: '→'; }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 3.5rem;
+      padding-top: 2rem; border-top: 1px solid var(--border);
+    }
+    .stat-item { }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 600; color: var(--earth);
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; letter-spacing: 0.05em; }
+
+    /* ── HERO RIGHT ── */
+    .hero-right {
+      position: relative; overflow: hidden;
+      animation: fadeIn 1.2s ease both 0.3s;
+    }
+    .hero-right-inner {
+      width: 100%; height: 100%;
+      background: var(--earth);
+      clip-path: polygon(8% 0%, 100% 0%, 100% 100%, 0% 100%);
+      display: flex; align-items: center; justify-content: center;
+      padding: 5rem 4rem 5rem 6rem;
+    }
+    .card-preview {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 1.8rem;
+      width: 100%; max-width: 380px;
+      backdrop-filter: blur(4px);
+    }
+    .card-preview-header {
+      display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem;
+    }
+    .card-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--gold); display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600;
+      color: var(--earth);
+    }
+    .card-title { font-size: 0.95rem; font-weight: 500; color: #fff; }
+    .card-sub { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+    .card-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.8rem;
+    }
+    .card-row:last-child { border-bottom: none; }
+    .card-row-label { color: rgba(255,255,255,0.5); }
+    .card-row-value { color: rgba(255,255,255,0.9); font-weight: 400; }
+    .card-badge {
+      font-size: 0.68rem; padding: 3px 10px;
+      border-radius: 20px; font-weight: 500; letter-spacing: 0.04em;
+    }
+    .badge-green { background: rgba(107,158,82,0.25); color: var(--gold-light); }
+    .card-land-total {
+      margin-top: 1.2rem; padding: 0.9rem; background: rgba(196,154,43,0.15);
+      border-radius: 6px; border: 1px solid rgba(196,154,43,0.3);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .clt-label { font-size: 0.75rem; color: var(--gold-light); }
+    .clt-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 600; color: var(--gold-light);
+    }
+
+    /* ── FEATURES ── */
+    .section { padding: 6rem 5rem; }
+    .section-label {
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+      display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;
+    }
+    .section-label::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 600;
+      color: var(--earth); line-height: 1.15; margin-bottom: 1rem;
+    }
+    .section-intro { font-size: 1rem; color: var(--muted); max-width: 520px; line-height: 1.7; }
+
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5px;
+      background: var(--border); border: 1px solid var(--border);
+      margin-top: 4rem; border-radius: 4px; overflow: hidden;
+    }
+    .feature-cell {
+      background: var(--cream); padding: 2.5rem 2rem;
+      transition: background 0.2s;
+    }
+    .feature-cell:hover { background: var(--cream-dark); }
+    .feature-icon {
+      width: 42px; height: 42px; border-radius: 6px;
+      background: var(--earth); display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.2rem;
+    }
+    .feature-icon svg { width: 22px; height: 22px; stroke: var(--gold-light); fill: none; stroke-width: 1.5; }
+    .feature-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 600; color: var(--earth); margin-bottom: 0.6rem;
+    }
+    .feature-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── HOW IT WORKS ── */
+    .how-section {
+      padding: 6rem 5rem;
+      background: var(--earth);
+      position: relative; overflow: hidden;
+    }
+    .how-section .section-label::before { background: var(--gold); }
+    .how-section .section-label { color: var(--gold); }
+    .how-section h2 { color: var(--cream); }
+    .how-section .section-intro { color: rgba(245,240,232,0.6); }
+
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 3rem;
+      margin-top: 4rem; position: relative;
+    }
+    .steps-grid::before {
+      content: '';
+      position: absolute; top: 22px; left: calc(50% / 3 + 22px); right: calc(50% / 3 + 22px);
+      height: 1px; background: rgba(196,154,43,0.3);
+      pointer-events: none;
+    }
+    .step { }
+    .step-num {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1px solid rgba(196,154,43,0.5);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 600; color: var(--gold);
+      margin-bottom: 1.5rem;
+      background: rgba(196,154,43,0.08);
+    }
+    .step-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 600; color: var(--cream); margin-bottom: 0.6rem;
+    }
+    .step-desc { font-size: 0.87rem; color: rgba(245,240,232,0.55); line-height: 1.65; }
+
+    /* ── ABOUT ── */
+    .about-section {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    }
+    .about-left {
+      padding: 6rem 4rem 6rem 5rem;
+      border-right: 1px solid var(--border);
+    }
+    .about-right {
+      padding: 6rem 5rem 6rem 4rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem; font-style: italic; font-weight: 400;
+      color: var(--earth); line-height: 1.5;
+      border-left: 3px solid var(--gold);
+      padding-left: 1.5rem; margin-bottom: 2rem;
+    }
+    .about-body { font-size: 0.93rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.2rem; }
+    .pill-group { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+    .pill {
+      font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.35rem 0.9rem; border-radius: 20px;
+      border: 1px solid var(--border); color: var(--earth); font-weight: 500;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 7rem 5rem;
+      background: linear-gradient(135deg, #1A2F10 0%, var(--earth) 60%, #3D6B2A 100%);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='rgba(196,154,43,0.06)' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='20' fill='none' stroke='rgba(196,154,43,0.04)' stroke-width='1'/%3E%3C/svg%3E") repeat center/100px;
+    }
+    .cta-inner { position: relative; }
+    .cta-section h2 {
+      color: var(--cream); font-size: clamp(2.2rem, 4vw, 3.5rem); margin-bottom: 1rem;
+    }
+    .cta-section p { color: rgba(245,240,232,0.6); font-size: 1rem; margin-bottom: 2.5rem; }
+    .btn-gold {
+      display: inline-block; padding: 1rem 2.8rem;
+      background: var(--gold); color: var(--earth);
+      text-decoration: none; font-weight: 500;
+      font-size: 0.9rem; letter-spacing: 0.05em;
+      border-radius: 3px; transition: background 0.2s, transform 0.15s;
+    }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 5rem;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; font-weight: 600; color: var(--earth);
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-copy { font-size: 0.78rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.78rem; color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--earth); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 6rem 2rem 3rem; }
+      .hero-right { display: none; }
+      .section { padding: 4rem 2rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .about-section { grid-template-columns: 1fr; }
+      .about-left { border-right: none; border-bottom: 1px solid var(--border); padding: 3rem 2rem; }
+      .about-right { padding: 3rem 2rem; }
+      .how-section { padding: 4rem 2rem; }
+      .cta-section { padding: 5rem 2rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">वसुंधरा <span>Vasundhara</span></div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#" class="nav-cta">Sign In</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">Digital Land Registry of India</div>
+    <h1>The land beneath<br>your feet,<br><em>recorded.</em></h1>
+    <p class="hero-sub">
+      Vasundhara is a modern, secure land audit and registry portal — bringing transparency, accuracy, and accountability to land records across India.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Access the Portal</a>
+      <a href="#how" class="btn-ghost">See how it works</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">Aadhaar</div>
+        <div class="stat-label">Identity verified records</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3-Step</div>
+        <div class="stat-label">Streamlined enrollment</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">XLSX</div>
+        <div class="stat-label">Export ready registry</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-right-inner">
+      <div class="card-preview">
+        <div class="card-preview-header">
+          <div class="card-avatar">रा</div>
+          <div>
+            <div class="card-title">Ramesh Kumar Sharma</div>
+            <div class="card-sub">Khasra #4521 · Bhopal District</div>
+          </div>
+        </div>
+        <div class="card-row">
+          <span class="card-row-label">Aadhaar</span>
+          <span class="card-row-value">XXXX-XXXX-4782</span>
+        </div>
+        <div class="card-row">
+          <span class="card-row-label">Tehsil</span>
+          <span class="card-row-value">Huzur</span>
+        </div>
+        <div class="card-row">
+          <span class="card-row-label">Village (Gao)</span>
+          <span class="card-row-value">Ratibad</span>
+        </div>
+        <div class="card-row">
+          <span class="card-row-label">Survey Nos.</span>
+          <span class="card-row-value">124/2, 125, 126/A</span>
+        </div>
+        <div class="card-row">
+          <span class="card-row-label">Status</span>
+          <span class="card-row-value"><span class="card-badge badge-green">Verified</span></span>
+        </div>
+        <div class="card-land-total">
+          <span class="clt-label">Total Landholding</span>
+          <span class="clt-value">4.72 ha</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="reveal">
+    <div class="section-label">What we offer</div>
+    <h2>Built for the complexity<br>of Indian land records</h2>
+    <p class="section-intro">
+      From Aadhaar-linked identity to multi-survey land parcels — every field in Vasundhara reflects the real structure of land administration in India.
+    </p>
+  </div>
+  <div class="features-grid reveal">
+    <div class="feature-cell">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+      </div>
+      <div class="feature-title">Aadhaar & PAN Verified</div>
+      <p class="feature-desc">Every land owner is enrolled with their 12-digit Aadhaar and PAN details, ensuring tamper-proof identity linkage for all records.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+      </div>
+      <div class="feature-title">Granular Land Mapping</div>
+      <p class="feature-desc">Record multiple survey numbers per landholding, capture District, Tehsil, and Gao details with precise hectare measurements.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </div>
+      <div class="feature-title">3-Step Enrollment</div>
+      <p class="feature-desc">A guided wizard captures personal information, land details, and a final review — structured to match how field officers collect data.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      </div>
+      <div class="feature-title">Search & Pagination</div>
+      <p class="feature-desc">Instantly query the full registry by name, Aadhaar, survey number or village with fast paginated results across thousands of records.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      </div>
+      <div class="feature-title">Excel Export</div>
+      <p class="feature-desc">Download the complete registry as a structured XLSX spreadsheet — audit-ready, shareable with district offices, no formatting required.</p>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+      </div>
+      <div class="feature-title">JWT-Secured Access</div>
+      <p class="feature-desc">Admin authentication using JSON Web Tokens and bcrypt-hashed passwords — all data protected behind role-based access control.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="reveal">
+    <div class="section-label">Process</div>
+    <h2>From field to digital record<br>in three steps</h2>
+    <p class="section-intro">A structured flow designed for district-level administrators, revenue officers, and tehsildars.</p>
+  </div>
+  <div class="steps-grid reveal">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Personal Identity</div>
+      <p class="step-desc">Enter the land owner's full name, mobile number, Aadhaar number (12 digits), and PAN card details to establish a verified identity anchor.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Land & Location</div>
+      <p class="step-desc">Map the District, Tehsil, and Gao. Add one or more survey (Khasra) numbers, specify the area in hectares per parcel, and verify the total holding.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Review & Commit</div>
+      <p class="step-desc">A final live preview summarises all entered data including the cumulative landholding. Confirm to write the record into the secured MongoDB registry.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-left reveal">
+    <div class="section-label">The Mission</div>
+    <h2>Land records that belong<br>to the people</h2>
+    <div class="about-quote">
+      "वसुंधरा" — she who bears all.<br>Built so every inch of India's land is accounted for.
+    </div>
+    <p class="about-body">
+      India's land administration has long struggled with fragmented paper records, disputed boundaries, and inaccessible data. Vasundhara was built to address this — a clean, auditable digital interface that district offices can actually use.
+    </p>
+    <p class="about-body">
+      Built with TypeScript across both layers, React + Vite on the frontend, and a Node/Express/MongoDB backend, Vasundhara is designed to be deployed, maintained, and trusted.
+    </p>
+    <div class="pill-group">
+      <span class="pill">React + Vite</span>
+      <span class="pill">Node.js</span>
+      <span class="pill">MongoDB</span>
+      <span class="pill">TypeScript</span>
+      <span class="pill">JWT Auth</span>
+      <span class="pill">Tailwind CSS</span>
+    </div>
+  </div>
+  <div class="about-right reveal">
+    <div class="section-label">Open Source</div>
+    <h2>Built in the open,<br>for the public good</h2>
+    <p class="about-body">
+      Vasundhara is an open-source project. Review the code, raise issues, or contribute improvements on GitHub. Transparency in government data starts with transparent code.
+    </p>
+    <a href="https://github.com/dotrwt/Vasundhara" class="btn-primary" style="margin-top:1rem; display:inline-block;">View on GitHub →</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <div class="section-label" style="justify-content:center; margin-bottom:1rem;">Get started</div>
+    <h2>Begin your district's<br>digital land registry</h2>
+    <p>Secure, structured, and built for India's land administration needs.</p>
+    <a href="#" class="btn-gold">Access the Portal</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">वसुंधरा <span>Vasundhara</span></div>
+  <div class="footer-copy">© 2025 Vasundhara. Land Registry Portal.</div>
+  <div class="footer-links">
+    <a href="https://github.com/dotrwt/Vasundhara">GitHub</a>
+    <a href="#">Privacy</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

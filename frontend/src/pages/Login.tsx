@@ -71,7 +71,7 @@ export const Login: React.FC = () => {
           </p>
         </div>
 
-        <h2 className="text-sm font-bold mb-6 text-gray-850 dark:text-gray-200 border-l-4 border-blue-600 pl-2 uppercase tracking-wide">
+        <h2 className="text-sm font-bold mb-6 text-gray-800 dark:text-gray-200 border-l-4 border-blue-600 pl-2 uppercase tracking-wide">
           Admin Portal Authentication
         </h2>
 
@@ -92,9 +92,9 @@ export const Login: React.FC = () => {
               disabled={isSubmitting}
               className={`block w-full h-11 px-3 border ${
                 errors.email
-                  ? "border-red-500 focus:ring-red-500/20 focus:border-red-500"
-                  : "border-gray-300 dark:border-gray-700 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500"
-              } bg-white dark:bg-gray-808 text-sm focus:outline-none focus:ring-2 rounded-md dark:text-white transition-all`}
+                   ? "border-red-500 focus:ring-red-500/20 focus:border-red-500"
+                   : "border-gray-300 dark:border-gray-700 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500"
+              } bg-white dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 rounded-md dark:text-white transition-all`}
               placeholder="admin@example.gov.in"
               {...register("email")}
             />
@@ -113,9 +113,9 @@ export const Login: React.FC = () => {
               disabled={isSubmitting}
               className={`block w-full h-11 px-3 border ${
                 errors.password
-                  ? "border-red-500 focus:ring-red-500/20 focus:border-red-500"
-                  : "border-gray-300 dark:border-gray-700 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500"
-              } bg-white dark:bg-gray-808 text-sm focus:outline-none focus:ring-2 rounded-md dark:text-white transition-all`}
+                   ? "border-red-500 focus:ring-red-500/20 focus:border-red-500"
+                   : "border-gray-300 dark:border-gray-700 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500"
+              } bg-white dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 rounded-md dark:text-white transition-all`}
               placeholder="••••••••"
               {...register("password")}
             />
@@ -139,7 +139,7 @@ export const Login: React.FC = () => {
             <button
               onClick={() => navigate("/register")}
               disabled={isSubmitting}
-              className="text-blue-605 dark:text-blue-400 hover:underline font-bold focus:outline-none cursor-pointer"
+              className="text-blue-600 dark:text-blue-400 hover:underline font-bold focus:outline-none cursor-pointer"
             >
               Create Account
             </button>

@@ -59,6 +59,52 @@ const userSchema = new Schema<IUser>(
         message: "Invalid PAN card format",
       },
     },
+    samagraId: {
+      type: String,
+      required: false,
+      validate: {
+        validator: function (v: string) {
+          return !v || /^\d{9}$/.test(v);
+        },
+        message: "Samagra ID must be exactly 9 digits",
+      },
+      trim: true,
+    },
+    gender: {
+      type: String,
+      required: false,
+      enum: ["Male", "Female", "Other"],
+      trim: true,
+    },
+    farmerCategory: {
+      type: String,
+      required: false,
+      enum: ["Marginal", "Small", "Semi-Medium", "Medium", "Large"],
+      trim: true,
+    },
+    bankAccountNo: {
+      type: String,
+      required: false,
+      validate: {
+        validator: function (v: string) {
+          return !v || /^\d{9,18}$/.test(v);
+        },
+        message: "Bank Account number must be between 9 and 18 digits",
+      },
+      trim: true,
+    },
+    ifscCode: {
+      type: String,
+      required: false,
+      uppercase: true,
+      validate: {
+        validator: function (v: string) {
+          return !v || /^[A-Z]{4}0[A-Z0-9]{6}$/.test(v);
+        },
+        message: "IFSC code must be in standard Indian format (e.g. SBIN0001234)",
+      },
+      trim: true,
+    },
     jila: {
       type: String,
       required: [true, "Jila (district) is required"],
@@ -114,13 +160,14 @@ userSchema.pre<IUser>("save", function (next) {
   next();
 });
 
-// Text index on name, mobile, aadhar, pan, gao
+// Text index on name, mobile, aadhar, pan, gao, samagraId
 userSchema.index({
   name: "text",
   mobile: "text",
   aadhar: "text",
   pan: "text",
   gao: "text",
+  samagraId: "text",
 });
 
 export const User = model<IUser>("User", userSchema);

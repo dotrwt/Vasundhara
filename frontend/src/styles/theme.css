@@ -39,6 +39,16 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  
+  --earth: #2C4A1E;
+  --earth-mid: #3D6B2A;
+  --earth-light: #6B9E52;
+  --gold: #C49A2B;
+  --gold-light: #E8C96A;
+  --cream: #F5F0E8;
+  --cream-dark: #EAE2D0;
+  --ink: #1A1A0F;
+  --muted-custom: #6B6B5A;
 }
 
 .dark {
@@ -117,6 +127,16 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  
+  --color-earth: var(--earth);
+  --color-earth-mid: var(--earth-mid);
+  --color-earth-light: var(--earth-light);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-cream: var(--cream);
+  --color-cream-dark: var(--cream-dark);
+  --color-ink: var(--ink);
+  --color-muted-custom: var(--muted-custom);
 }
 
 @layer base {

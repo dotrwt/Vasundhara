@@ -17,6 +17,24 @@ const step1Schema = z.object({
     .string()
     .toUpperCase()
     .regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, "PAN must be a valid format (e.g., ABCDE1234F)"),
+  samagraId: z
+    .string()
+    .regex(/^\d{9}$/, "Samagra ID must be exactly 9 digits")
+    .optional()
+    .or(z.literal("")),
+  gender: z.string().optional().or(z.literal("")),
+  farmerCategory: z.string().optional().or(z.literal("")),
+  bankAccountNo: z
+    .string()
+    .regex(/^\d{9,18}$/, "Bank Account must be 9 to 18 digits")
+    .optional()
+    .or(z.literal("")),
+  ifscCode: z
+    .string()
+    .toUpperCase()
+    .regex(/^[A-Z]{4}0[A-Z0-9]{6}$/, "IFSC must be standard (e.g. SBIN0001234)")
+    .optional()
+    .or(z.literal("")),
 });
 
 const step2Schema = z.object({
@@ -59,6 +77,11 @@ export const CreateUser: React.FC = () => {
       mobile: "",
       aadhar: "",
       pan: "",
+      samagraId: "",
+      gender: "",
+      farmerCategory: "",
+      bankAccountNo: "",
+      ifscCode: "",
       jila: "",
       tehsil: "",
       gao: "",
@@ -80,7 +103,18 @@ export const CreateUser: React.FC = () => {
   const handleNext = async () => {
     let isValid = false;
     if (step === 1) {
-      isValid = await trigger(["name", "fatherName", "mobile", "aadhar", "pan"]);
+      isValid = await trigger([
+        "name",
+        "fatherName",
+        "mobile",
+        "aadhar",
+        "pan",
+        "samagraId",
+        "gender",
+        "farmerCategory",
+        "bankAccountNo",
+        "ifscCode",
+      ]);
       if (isValid) setStep(2);
     } else if (step === 2) {
       isValid = await trigger(["jila", "tehsil", "gao", "landRecords"]);
@@ -99,6 +133,7 @@ export const CreateUser: React.FC = () => {
     try {
       const data = getValues();
       data.pan = data.pan.toUpperCase();
+      if (data.ifscCode) data.ifscCode = data.ifscCode.toUpperCase();
       
       const response = await apiCreateUser(data);
       if (response.success) {
@@ -112,6 +147,11 @@ export const CreateUser: React.FC = () => {
             mobile: "",
             aadhar: "",
             pan: "",
+            samagraId: "",
+            gender: "",
+            farmerCategory: "",
+            bankAccountNo: "",
+            ifscCode: "",
             jila: "",
             tehsil: "",
             gao: "",
@@ -286,8 +326,116 @@ export const CreateUser: React.FC = () => {
                   }}
                 />
                 {errors.pan && (
-                  <p className="text-red-650 text-xs font-bold mt-1 uppercase">
+                  <p className="text-red-655 text-xs font-bold mt-1 uppercase">
                     {errors.pan.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
+                  Samagra ID (9 Digits)
+                </label>
+                <input
+                  type="text"
+                  maxLength={9}
+                  className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
+                  placeholder="e.g. 123456789"
+                  {...register("samagraId")}
+                  onChange={(e) => {
+                    setValue("samagraId", e.target.value.replace(/\D/g, ""));
+                    trigger("samagraId");
+                  }}
+                />
+                {errors.samagraId && (
+                  <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                    {errors.samagraId.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
+                  Gender
+                </label>
+                <select
+                  className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
+                  {...register("gender")}
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+                {errors.gender && (
+                  <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                    {errors.gender.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
+                  Farmer Category
+                </label>
+                <select
+                  className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
+                  {...register("farmerCategory")}
+                >
+                  <option value="">Select Category</option>
+                  <option value="Marginal">Marginal</option>
+                  <option value="Small">Small</option>
+                  <option value="Semi-Medium">Semi-Medium</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Large">Large</option>
+                </select>
+                {errors.farmerCategory && (
+                  <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                    {errors.farmerCategory.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
+                  Bank Account Number
+                </label>
+                <input
+                  type="text"
+                  maxLength={18}
+                  className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
+                  placeholder="e.g. 123456789012"
+                  {...register("bankAccountNo")}
+                  onChange={(e) => {
+                    setValue("bankAccountNo", e.target.value.replace(/\D/g, ""));
+                    trigger("bankAccountNo");
+                  }}
+                />
+                {errors.bankAccountNo && (
+                  <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                    {errors.bankAccountNo.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
+                  Bank IFSC Code
+                </label>
+                <input
+                  type="text"
+                  maxLength={11}
+                  className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white font-mono uppercase transition-all"
+                  placeholder="e.g. SBIN0001234"
+                  {...register("ifscCode")}
+                  onChange={(e) => {
+                    setValue("ifscCode", e.target.value.toUpperCase());
+                    trigger("ifscCode");
+                  }}
+                />
+                {errors.ifscCode && (
+                  <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                    {errors.ifscCode.message}
                   </p>
                 )}
               </div>
@@ -494,15 +642,35 @@ export const CreateUser: React.FC = () => {
                   </div>
                   <div className="flex justify-between md:block border-b border-gray-100 dark:border-gray-800 md:border-b-0 pb-1">
                     <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Mobile Number</dt>
-                    <dd className="font-bold text-gray-950 dark:text-white">{formValues.mobile}</dd>
+                    <dd className="font-bold text-gray-955 dark:text-white">{formValues.mobile}</dd>
                   </div>
                   <div className="flex justify-between md:block border-b border-gray-100 dark:border-gray-800 md:border-b-0 pb-1">
                     <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Aadhar Card</dt>
                     <dd className="font-bold text-gray-955 dark:text-white">{formValues.aadhar}</dd>
                   </div>
-                  <div className="flex justify-between md:block pb-1">
+                  <div className="flex justify-between md:block border-b border-gray-100 dark:border-gray-800 md:border-b-0 pb-1">
                     <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">PAN Card</dt>
                     <dd className="font-bold text-gray-955 dark:text-white font-mono">{formValues.pan}</dd>
+                  </div>
+                  <div className="flex justify-between md:block border-b border-gray-100 dark:border-gray-800 md:border-b-0 pb-1">
+                    <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Samagra ID</dt>
+                    <dd className="font-bold text-gray-955 dark:text-white">{formValues.samagraId || "N/A"}</dd>
+                  </div>
+                  <div className="flex justify-between md:block border-b border-gray-100 dark:border-gray-800 md:border-b-0 pb-1">
+                    <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Gender</dt>
+                    <dd className="font-bold text-gray-955 dark:text-white">{formValues.gender || "N/A"}</dd>
+                  </div>
+                  <div className="flex justify-between md:block border-b border-gray-100 dark:border-gray-800 md:border-b-0 pb-1">
+                    <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Category</dt>
+                    <dd className="font-bold text-gray-955 dark:text-white">{formValues.farmerCategory || "N/A"}</dd>
+                  </div>
+                  <div className="flex justify-between md:block border-b border-gray-100 dark:border-gray-800 md:border-b-0 pb-1">
+                    <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Bank Account</dt>
+                    <dd className="font-bold text-gray-955 dark:text-white">{formValues.bankAccountNo || "N/A"}</dd>
+                  </div>
+                  <div className="flex justify-between md:block pb-1">
+                    <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">IFSC Code</dt>
+                    <dd className="font-bold text-gray-955 dark:text-white font-mono">{formValues.ifscCode || "N/A"}</dd>
                   </div>
                 </dl>
               </div>

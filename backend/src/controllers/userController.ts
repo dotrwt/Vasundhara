@@ -21,6 +21,7 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
         { aadhar: searchRegex },
         { pan: searchRegex },
         { gao: searchRegex },
+        { samagraId: searchRegex },
       ];
     }
 
@@ -181,6 +182,11 @@ export const exportUsersToExcel = async (req: Request, res: Response, next: Next
       Mobile: user.mobile,
       Aadhar: user.aadhar,
       PAN: user.pan,
+      "Samagra ID": user.samagraId || "",
+      Gender: user.gender || "",
+      "Farmer Category": user.farmerCategory || "",
+      "Bank Account No": user.bankAccountNo || "",
+      "IFSC Code": user.ifscCode || "",
       Jila: user.jila,
       Tehsil: user.tehsil,
       Village: user.gao,
@@ -203,6 +209,11 @@ export const exportUsersToExcel = async (req: Request, res: Response, next: Next
       { wch: 15 }, // Mobile
       { wch: 18 }, // Aadhar
       { wch: 15 }, // PAN
+      { wch: 15 }, // Samagra ID
+      { wch: 10 }, // Gender
+      { wch: 18 }, // Category
+      { wch: 20 }, // Bank Acc
+      { wch: 15 }, // IFSC
       { wch: 15 }, // Jila
       { wch: 15 }, // Tehsil
       { wch: 15 }, // Village

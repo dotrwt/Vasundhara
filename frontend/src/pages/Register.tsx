@@ -60,7 +60,7 @@ export const Register: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-955 p-4 font-sans text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950 p-4 font-sans text-gray-900 dark:text-white transition-colors duration-300">
       <div className="w-full max-w-md bg-white dark:bg-gray-900 p-8 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-xl transition-colors duration-300">
         {/* Header */}
         <div className="text-center mb-6 border-b border-gray-250/10 dark:border-gray-800 pb-4">
@@ -73,7 +73,7 @@ export const Register: React.FC = () => {
           </p>
         </div>
 
-        <h2 className="text-sm font-bold mb-6 text-gray-850 dark:text-gray-205 border-l-4 border-blue-600 pl-2 uppercase tracking-wide">
+        <h2 className="text-sm font-bold mb-6 text-gray-800 dark:text-gray-200 border-l-4 border-blue-600 pl-2 uppercase tracking-wide">
           Register Admin Account
         </h2>
 
@@ -96,7 +96,7 @@ export const Register: React.FC = () => {
                 errors.name
                   ? "border-red-500 focus:ring-red-500/20 focus:border-red-500"
                   : "border-gray-300 dark:border-gray-700 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500"
-              } bg-white dark:bg-gray-808 text-sm focus:outline-none focus:ring-2 rounded-md dark:text-white transition-all`}
+              } bg-white dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 rounded-md dark:text-white transition-all`}
               placeholder="e.g. Shri Rajesh Kumar"
               {...register("name")}
             />
@@ -117,7 +117,7 @@ export const Register: React.FC = () => {
                 errors.email
                   ? "border-red-500 focus:ring-red-500/20 focus:border-red-500"
                   : "border-gray-300 dark:border-gray-700 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500"
-              } bg-white dark:bg-gray-808 text-sm focus:outline-none focus:ring-2 rounded-md dark:text-white transition-all`}
+              } bg-white dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 rounded-md dark:text-white transition-all`}
               placeholder="admin@example.gov.in"
               {...register("email")}
             />
@@ -138,7 +138,7 @@ export const Register: React.FC = () => {
                 errors.password
                   ? "border-red-500 focus:ring-red-500/20 focus:border-red-500"
                   : "border-gray-300 dark:border-gray-700 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500"
-              } bg-white dark:bg-gray-808 text-sm focus:outline-none focus:ring-2 rounded-md dark:text-white transition-all`}
+              } bg-white dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 rounded-md dark:text-white transition-all`}
               placeholder="••••••••"
               {...register("password")}
             />
@@ -156,13 +156,13 @@ export const Register: React.FC = () => {
           </button>
         </form>
 
-        <div className="mt-8 pt-4 border-t border-gray-205 dark:border-gray-800 text-center">
-          <p className="text-xs text-gray-505 dark:text-gray-400 font-bold uppercase">
+        <div className="mt-8 pt-4 border-t border-gray-200 dark:border-gray-800 text-center">
+          <p className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase">
             Already registered?{" "}
             <button
               onClick={() => navigate("/login")}
               disabled={isSubmitting}
-              className="text-blue-700 dark:text-blue-400 hover:underline font-bold focus:outline-none cursor-pointer"
+              className="text-blue-600 dark:text-blue-400 hover:underline font-bold focus:outline-none cursor-pointer"
             >
               Back to Login
             </button>

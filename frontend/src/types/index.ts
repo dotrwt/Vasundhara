@@ -19,11 +19,32 @@ export interface User {
   pan: string;
   panFile?: string;
   farmerId: string;
+  samagraId?: string;
+  gender?: string;
+  farmerCategory?: string;
+  bankAccountNo?: string;
+  ifscCode?: string;
   jila: string;
   tehsil: string;
   gao: string;
   landRecords: LandRecord[];
   totalRakhva: number;
+  createdBy: Admin | string;
+  updatedBy?: Admin | string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface DmrAc {
+  id: string;
+  _id?: string;
+  farmerName: string;
+  farmerId?: User | string;
+  kharifCash: number;
+  kharifKind: number;
+  rabiCash: number;
+  rabiKind: number;
+  remarks?: string;
   createdBy: Admin | string;
   updatedBy?: Admin | string;
   createdAt: string;

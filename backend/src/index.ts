@@ -7,6 +7,7 @@ import cors from "cors";
 import { connectDB } from "./config/db";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
+import dmrAcRoutes from "./routes/dmrAcRoutes";
 import { errorHandler } from "./middleware/errorHandler";
 
 const app = express();
@@ -17,7 +18,8 @@ connectDB();
 
 // CORS Configuration
 const allowedOrigins = [
-  process.env.FRONTEND_URL || "http://localhost:5173",
+  ...(process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(",") : []),
+  "http://localhost:5173",
   "http://localhost:3000",
 ];
 
@@ -26,7 +28,15 @@ app.use(
     origin: function (origin, callback) {
       // allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === "development") {
+      
+      // Check if origin matches allowed list, or ends with vercel.app in production/staging for preview domains,
+      // or if NODE_ENV is development
+      const isAllowed = allowedOrigins.some(o => o.trim().toLowerCase() === origin.toLowerCase()) ||
+                        origin.endsWith(".vercel.app") ||
+                        origin.endsWith(".render.com") ||
+                        process.env.NODE_ENV === "development";
+                        
+      if (isAllowed) {
         return callback(null, true);
       } else {
         return callback(new Error("Not allowed by CORS"), false);
@@ -51,6 +61,7 @@ if (process.env.NODE_ENV !== "production") {
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/dmrac", dmrAcRoutes);
 
 // Basic health check route
 app.get("/health", (req, res) => {

@@ -27,6 +27,22 @@ const userValidationRules = [
   body("pan", "PAN must be a valid format (e.g., ABCDE1234F)")
     .toUpperCase()
     .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/),
+  body("samagraId", "Samagra ID must be exactly 9 digits")
+    .optional({ checkFalsy: true })
+    .matches(/^\d{9}$/),
+  body("gender", "Gender must be Male, Female, or Other")
+    .optional({ checkFalsy: true })
+    .isIn(["Male", "Female", "Other"]),
+  body("farmerCategory", "Invalid Farmer Category")
+    .optional({ checkFalsy: true })
+    .isIn(["Marginal", "Small", "Semi-Medium", "Medium", "Large"]),
+  body("bankAccountNo", "Bank Account number must be between 9 and 18 digits")
+    .optional({ checkFalsy: true })
+    .matches(/^\d{9,18}$/),
+  body("ifscCode", "IFSC code must be in standard Indian format")
+    .optional({ checkFalsy: true })
+    .toUpperCase()
+    .matches(/^[A-Z]{4}0[A-Z0-9]{6}$/),
   body("jila", "Jila is required").notEmpty().trim(),
   body("tehsil", "Tehsil is required").notEmpty().trim(),
   body("gao", "Village name (Gao) is required").notEmpty().trim(),

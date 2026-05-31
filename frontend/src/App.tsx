@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
@@ -9,6 +9,10 @@ import Dashboard from "./pages/Dashboard";
 import CreateUser from "./pages/CreateUser";
 import EditUser from "./pages/EditUser";
 import ViewUser from "./pages/ViewUser";
+import LandingPage from "./pages/LandingPage";
+import DmrAcList from "./pages/DmrAcList";
+import DmrAcForm from "./pages/DmrAcForm";
+import NotFound from "./pages/NotFound";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "./context/ThemeContext";
 
@@ -18,6 +22,9 @@ export const App: React.FC = () => {
       <AuthProvider>
       <BrowserRouter>
         <Routes>
+          {/* Public Landing Page */}
+          <Route path="/" element={<LandingPage />} />
+
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -29,12 +36,16 @@ export const App: React.FC = () => {
               <Route path="/users/new" element={<CreateUser />} />
               <Route path="/users/:id" element={<ViewUser />} />
               <Route path="/users/:id/edit" element={<EditUser />} />
+              
+              {/* DMR AC Routes */}
+              <Route path="/dmrac" element={<DmrAcList />} />
+              <Route path="/dmrac/new" element={<DmrAcForm />} />
+              <Route path="/dmrac/:id/edit" element={<DmrAcForm />} />
             </Route>
           </Route>
 
           {/* Fallback Redirects */}
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
       <Toaster
