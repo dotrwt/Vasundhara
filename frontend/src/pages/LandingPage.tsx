@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import vasundharaLogo from "../assets/Vasundhara_logo2.png";
+import vasundharaLogo from "../assets/Vasundhara_logo2.png"
 import "./LandingPage.css";
 
 export const LandingPage: React.FC = () => {
@@ -44,9 +44,6 @@ export const LandingPage: React.FC = () => {
             <a href="#how">How it works</a>
           </li>
           <li>
-            <a href="#about">About</a>
-          </li>
-          <li>
             {admin ? (
               <Link to="/dashboard" className="nav-cta">
                 Dashboard
@@ -73,7 +70,7 @@ export const LandingPage: React.FC = () => {
             <em>recorded.</em>
           </h1>
           <p className="hero-sub">
-            Vasundhara is a modern, secure land audit and registry portal — bringing transparency, accuracy, and accountability to land records across India.
+            Vasundhara is a modern, secure land audit and registry portal — bringing accuracy, and accountability to land records across India.
           </p>
           <div className="hero-actions">
             <Link to={admin ? "/dashboard" : "/login"} className="btn-primary">
@@ -86,7 +83,7 @@ export const LandingPage: React.FC = () => {
           <div className="hero-stats">
             <div className="stat-item">
               <div className="stat-num">Aadhaar</div>
-              <div className="stat-label">Identity verified records</div>
+              <div className="stat-label">Identity records</div>
             </div>
             <div className="stat-item">
               <div className="stat-num">4-Step</div>
@@ -150,7 +147,7 @@ export const LandingPage: React.FC = () => {
             of Indian land records
           </h2>
           <p className="section-intro">
-            From Aadhaar-linked identity to multi-survey land parcels — every field in Vasundhara reflects the real structure of land administration in India.
+            From Aadhaar identity to multi-survey land parcels — every field in Vasundhara reflects the real structure of land administration in India.
           </p>
         </div>
         <div className="features-grid reveal">
@@ -239,7 +236,7 @@ export const LandingPage: React.FC = () => {
             <div className="step-num">01</div>
             <div className="step-title">Personal Identity</div>
             <p className="step-desc">
-              Enter the land owner's full name, mobile number, Aadhaar (12 digits), PAN, and Samagra ID to establish a verified identity anchor.
+              Enter the land owner's full name, mobile number, Aadhaar (12 digits), PAN, and Samagra ID to establish identity anchor.
             </p>
           </div>
           <div className="step">
@@ -266,80 +263,15 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* ABOUT */}
-      <section className="about-section" id="about">
-        <div className="about-left reveal">
-          <div className="section-label">The Mission</div>
-          <h2>
-            Land records that belong
-            <br />
-            to the people
-          </h2>
-          <div className="about-quote">
-            "वसुंधरा" — she who bears all.
-            <br />
-            Built so every inch of India's land is accounted for.
-          </div>
-          <p className="about-body">
-            India's land administration has long struggled with fragmented paper records, disputed boundaries, and inaccessible data. Vasundhara was built to address this — a clean, auditable digital interface that district offices can actually use.
-          </p>
-          <p className="about-body">
-            Built with TypeScript across both layers, React + Vite on the frontend, and a Node/Express/MongoDB backend, Vasundhara is designed to be deployed, maintained, and trusted.
-          </p>
-          <div className="pill-group">
-            <span className="pill">React + Vite</span>
-            <span className="pill">Node.js</span>
-            <span className="pill">MongoDB</span>
-            <span className="pill">TypeScript</span>
-            <span className="pill">JWT Auth</span>
-            <span className="pill">Vanilla CSS</span>
-          </div>
-        </div>
-        <div className="about-right reveal">
-          <div className="section-label">Open Source</div>
-          <h2>
-            Built in the open,
-            <br />
-            for the public good
-          </h2>
-          <p className="about-body">
-            Vasundhara is an open-source project. Review the code, raise issues, or contribute improvements on GitHub. Transparency in government data starts with transparent code.
-          </p>
-          <a href="https://github.com/dotrwt/Vasundhara" className="btn-primary" style={{ marginTop: "1rem", display: "inline-block" }}>
-            View on GitHub →
-          </a>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="cta-section">
-        <div className="cta-inner reveal">
-          <div className="section-label" style={{ justifyContent: "center", marginBottom: "1rem" }}>
-            Get started
-          </div>
-          <h2>
-            Begin your district's
-            <br />
-            digital land registry
-          </h2>
-          <p>Secure, structured, and built for India's land administration needs.</p>
-          <Link to={admin ? "/dashboard" : "/login"} className="btn-gold">
-            Access the Portal
-          </Link>
-        </div>
-      </section>
-
       {/* FOOTER */}
       <footer>
         <div className="footer-logo">
           <img src={vasundharaLogo} alt="Vasundhara Logo" />
           <span>Vasundhara</span>
         </div>
-        <div className="footer-copy">© 2026 Vasundhara. Land Registry Portal.</div>
+        <div className="footer-copy">© 2026 Vasundhara. Land Registry Portal. This is a testing project and is not an official portal.</div>
         <div className="footer-links">
           <a href="https://github.com/dotrwt/Vasundhara">GitHub</a>
-          <a href="#">Privacy</a>
-          <a href="#">Contact</a>
         </div>
       </footer>
     </div>
