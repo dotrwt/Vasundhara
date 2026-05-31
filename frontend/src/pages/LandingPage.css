@@ -261,7 +261,7 @@
 .landing-page-body .how-section .section-intro { color: var(--muted); }
 
 .landing-page-body .steps-grid {
-  display: grid; grid-template-columns: repeat(3,1fr); gap: 2.5rem;
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 2.5rem;
   margin-top: 3.5rem; position: relative;
   max-width: 1200px;
   margin-left: auto;
@@ -269,7 +269,7 @@
 }
 .landing-page-body .steps-grid::before {
   content: '';
-  position: absolute; top: 20px; left: calc(100% / 6 + 20px); right: calc(100% / 6 + 20px);
+  position: absolute; top: 20px; left: calc(100% / 8 + 20px); right: calc(100% / 8 + 20px);
   height: 1px; background: rgba(44,74,30,0.1);
   pointer-events: none;
 }

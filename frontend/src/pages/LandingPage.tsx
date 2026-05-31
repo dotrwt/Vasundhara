@@ -89,7 +89,7 @@ export const LandingPage: React.FC = () => {
               <div className="stat-label">Identity verified records</div>
             </div>
             <div className="stat-item">
-              <div className="stat-num">3-Step</div>
+              <div className="stat-num">4-Step</div>
               <div className="stat-label">Streamlined enrollment</div>
             </div>
             <div className="stat-item">
@@ -182,9 +182,9 @@ export const LandingPage: React.FC = () => {
                 <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </div>
-            <div className="feature-title">3-Step Enrollment</div>
+            <div className="feature-title">4-Step Enrollment</div>
             <p className="feature-desc">
-              A guided wizard captures personal information, land details, and a final review — structured to match how field officers collect data.
+              A guided wizard captures personal details, land parameters, DMR account numbers, and final review with secure database commits.
             </p>
           </div>
           <div className="feature-cell">
@@ -230,7 +230,7 @@ export const LandingPage: React.FC = () => {
           <h2>
             From field to digital record
             <br />
-            in three steps
+            in four steps
           </h2>
           <p className="section-intro">A structured flow designed for district-level administrators, revenue officers, and tehsildars.</p>
         </div>
@@ -239,21 +239,28 @@ export const LandingPage: React.FC = () => {
             <div className="step-num">01</div>
             <div className="step-title">Personal Identity</div>
             <p className="step-desc">
-              Enter the land owner's full name, mobile number, Aadhaar number (12 digits), and PAN card details to establish a verified identity anchor.
+              Enter the land owner's full name, mobile number, Aadhaar (12 digits), PAN, and Samagra ID to establish a verified identity anchor.
             </p>
           </div>
           <div className="step">
             <div className="step-num">02</div>
             <div className="step-title">Land & Location</div>
             <p className="step-desc">
-              Map the District, Tehsil, and Gao. Add one or more survey (Khasra) numbers, specify the area in hectares per parcel, and verify the total holding.
+              Map the District, Tehsil, and Gao. Add survey (Khasra) numbers, specify the area in hectares, and verify the total holding.
             </p>
           </div>
           <div className="step">
             <div className="step-num">03</div>
+            <div className="step-title">DMR Accounts</div>
+            <p className="step-desc">
+              Input specific bank account numbers for Kharif Cash, Kharif Kind, Rabi Cash, and Rabi Kind accounts for the land owner.
+            </p>
+          </div>
+          <div className="step">
+            <div className="step-num">04</div>
             <div className="step-title">Review & Commit</div>
             <p className="step-desc">
-              A final live preview summarises all entered data including the cumulative landholding. Confirm to write the record into the secured MongoDB registry.
+              A final live preview summarises all entered details, landholdings, and DMR accounts. Confirm to commit securely to the database.
             </p>
           </div>
         </div>
