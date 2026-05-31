@@ -15,6 +15,7 @@ export interface User {
   name: string;
   fatherName: string;
   mobile: string;
+  dob: string;
   aadhar: string;
   pan: string;
   panFile?: string;

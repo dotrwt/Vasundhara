@@ -23,13 +23,14 @@ export interface IUser extends Document {
   name: string;
   fatherName: string;
   mobile: string;
+  dob: Date;
   aadhar: string;
   pan: string;
   samagraId?: string;
-  kharifCashAccount?: string;
-  kharifKindAccount?: string;
-  rabiCashAccount?: string;
-  rabiKindAccount?: string;
+  kharifCashAccount: string;
+  kharifKindAccount: string;
+  rabiCashAccount: string;
+  rabiKindAccount: string;
   jila: string;
   tehsil: string;
   gao: string;

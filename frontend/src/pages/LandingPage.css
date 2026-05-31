@@ -387,7 +387,8 @@
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .landing-page-body nav { padding: 1rem 1.5rem; }
-  .landing-page-body .nav-links { display: none; }
+  .landing-page-body .nav-links { display: flex; gap: 1rem; }
+  .landing-page-body .nav-links li:not(:last-child) { display: none; }
   .landing-page-body .hero { grid-template-columns: 1fr; min-height: auto; padding: 6rem 1.5rem 3rem; }
   .landing-page-body .hero-left { padding: 0; }
   .landing-page-body .hero-right { display: none; }

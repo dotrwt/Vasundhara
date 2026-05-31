@@ -5,6 +5,14 @@ import { User } from "../types";
 import { toast } from "sonner";
 import { ArrowLeft, Edit2, ShieldAlert } from "lucide-react";
 
+// Helper to format Aadhar with dashes
+const formatAadhar = (value: string) => {
+  const digits = value.replace(/\D/g, "");
+  const sliced = digits.slice(0, 16);
+  const groups = sliced.match(/.{1,4}/g);
+  return groups ? groups.join("-") : "";
+};
+
 export const ViewUser: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -107,8 +115,14 @@ export const ViewUser: React.FC = () => {
               <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5">{user.mobile}</dd>
             </div>
             <div className="border-b border-gray-100 dark:border-gray-800 pb-2">
+              <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Date of Birth</dt>
+              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5">
+                {user.dob ? new Date(user.dob).toLocaleDateString("en-IN") : "N/A"}
+              </dd>
+            </div>
+            <div className="border-b border-gray-100 dark:border-gray-800 pb-2">
               <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Aadhar Card</dt>
-              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5">{user.aadhar}</dd>
+              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5">{formatAadhar(user.aadhar)}</dd>
             </div>
             <div className="border-b border-gray-100 dark:border-gray-800 pb-2">
               <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">PAN Card</dt>

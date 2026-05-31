@@ -18,18 +18,18 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 px-6 py-3 flex items-center justify-between transition-colors duration-300">
-      <div className="flex items-center gap-3">
+    <header className="sticky top-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 px-4 sm:px-6 py-3 flex items-center justify-between transition-colors duration-300">
+      <div className="flex items-center gap-2 sm:gap-3">
         <img
           src={vasundharaLogo}
           alt="Vasundhara Logo"
-          className="h-10 w-auto object-contain dark:brightness-110"
+          className="h-8 sm:h-10 w-auto object-contain dark:brightness-110"
         />
-        <div className="border-l border-gray-300 dark:border-gray-700 pl-3">
-          <h1 className="text-xl font-black tracking-tight text-gray-900 dark:text-white leading-none">
+        <div className="border-l border-gray-300 dark:border-gray-700 pl-2 sm:pl-3">
+          <h1 className="text-base sm:text-xl font-black tracking-tight text-gray-900 dark:text-white leading-none">
             VASUNDHARA
           </h1>
-          <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold tracking-wider mt-0.5 uppercase">
+          <p className="text-[9px] sm:text-[10px] text-gray-500 dark:text-gray-400 font-bold tracking-wider mt-0.5 uppercase hidden xs:block">
             LAND RECORDS AND AUDITING
           </p>
         </div>

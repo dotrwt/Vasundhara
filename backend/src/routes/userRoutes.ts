@@ -23,17 +23,19 @@ const userValidationRules = [
   body("name", "Name is required").notEmpty().trim(),
   body("fatherName", "Father name is required").notEmpty().trim(),
   body("mobile", "Mobile number must be exactly 10 digits").matches(/^\d{10}$/),
-  body("aadhar", "Aadhar number must be exactly 12 digits").matches(/^\d{12}$/),
+  body("dob", "Date of birth is required").notEmpty().isISO8601().withMessage("Invalid date of birth format"),
+  body("aadhar", "Aadhar number must be formatted as XXXX-XXXX-XXXX or XXXX-XXXX-XXXX-XXXX")
+    .matches(/^\d{4}-\d{4}-\d{4}(-\d{4})?$/),
   body("pan", "PAN must be a valid format (e.g., ABCDE1234F)")
     .toUpperCase()
     .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/),
   body("samagraId", "Samagra ID must be exactly 9 digits")
     .optional({ checkFalsy: true })
     .matches(/^\d{9}$/),
-  body("kharifCashAccount", "Kharif Cash Account must be between 9 and 18 digits").matches(/^\d{9,18}$/),
-  body("kharifKindAccount", "Kharif Kind Account must be between 9 and 18 digits").matches(/^\d{9,18}$/),
-  body("rabiCashAccount", "Rabi Cash Account must be between 9 and 18 digits").matches(/^\d{9,18}$/),
-  body("rabiKindAccount", "Rabi Kind Account must be between 9 and 18 digits").matches(/^\d{9,18}$/),
+  body("kharifCashAccount", "Kharif Cash Account is required and must be between 9 and 18 digits").matches(/^\d{9,18}$/),
+  body("kharifKindAccount", "Kharif Kind Account is required and must be between 9 and 18 digits").matches(/^\d{9,18}$/),
+  body("rabiCashAccount", "Rabi Cash Account is required and must be between 9 and 18 digits").matches(/^\d{9,18}$/),
+  body("rabiKindAccount", "Rabi Kind Account is required and must be between 9 and 18 digits").matches(/^\d{9,18}$/),
   body("jila", "Jila is required").notEmpty().trim(),
   body("tehsil", "Tehsil is required").notEmpty().trim(),
   body("gao", "Village name (Gao) is required").notEmpty().trim(),

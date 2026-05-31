@@ -180,6 +180,7 @@ export const exportUsersToExcel = async (req: Request, res: Response, next: Next
       Name: user.name,
       "Father Name": user.fatherName,
       Mobile: user.mobile,
+      "Date of Birth": user.dob ? new Date(user.dob).toISOString().split('T')[0] : "",
       Aadhar: user.aadhar,
       PAN: user.pan,
       "Samagra ID": user.samagraId || "",
@@ -207,6 +208,7 @@ export const exportUsersToExcel = async (req: Request, res: Response, next: Next
       { wch: maxNameLen + 2 },
       { wch: maxFatherLen + 2 },
       { wch: 15 }, // Mobile
+      { wch: 15 }, // Date of Birth
       { wch: 18 }, // Aadhar
       { wch: 15 }, // PAN
       { wch: 15 }, // Samagra ID

@@ -7,6 +7,7 @@ export const useUsers = (initialPage = 1, initialLimit = 10) => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [page, setPage] = useState(initialPage);
   const [limit] = useState(initialLimit);
   const [pagination, setPagination] = useState({
@@ -16,10 +17,21 @@ export const useUsers = (initialPage = 1, initialLimit = 10) => {
     totalPages: 0,
   });
 
+  // Debounce search query
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [search]);
+
   const fetchUsers = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await apiGetUsers(page, limit, search);
+      const response = await apiGetUsers(page, limit, debouncedSearch);
       if (response.success) {
         setUsers(response.data);
         setPagination(response.pagination);
@@ -30,7 +42,7 @@ export const useUsers = (initialPage = 1, initialLimit = 10) => {
     } finally {
       setLoading(false);
     }
-  }, [page, limit, search]);
+  }, [page, limit, debouncedSearch]);
 
   useEffect(() => {
     fetchUsers();

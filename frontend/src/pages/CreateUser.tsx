@@ -7,12 +7,21 @@ import { apiCreateUser } from "../api/users";
 import { toast } from "sonner";
 import { ArrowLeft, ArrowRight, Plus, Trash2, Save } from "lucide-react";
 
+// Helper to format Aadhar with dashes
+const formatAadhar = (value: string) => {
+  const digits = value.replace(/\D/g, "");
+  const sliced = digits.slice(0, 16);
+  const groups = sliced.match(/.{1,4}/g);
+  return groups ? groups.join("-") : "";
+};
+
 // Schemas for steps
 const step1Schema = z.object({
   name: z.string().min(1, "Name is required").trim(),
   fatherName: z.string().min(1, "Father's name is required").trim(),
   mobile: z.string().regex(/^\d{10}$/, "Mobile must be exactly 10 digits"),
-  aadhar: z.string().regex(/^\d{12}$/, "Aadhar must be exactly 12 digits"),
+  dob: z.string().min(1, "Date of birth is required"),
+  aadhar: z.string().regex(/^\d{4}-\d{4}-\d{4}(-\d{4})?$/, "Aadhar must be formatted as XXXX-XXXX-XXXX or XXXX-XXXX-XXXX-XXXX"),
   pan: z
     .string()
     .toUpperCase()
@@ -40,10 +49,8 @@ const step2Schema = z.object({
 
 const dmrAccountSchema = z
   .string()
-  .optional()
-  .refine((val) => !val || /^\d{9,18}$/.test(val), {
-    message: "Account number must be between 9 and 18 digits",
-  });
+  .min(1, "Account number is required")
+  .regex(/^\d{9,18}$/, "Account number must be between 9 and 18 digits");
 
 const step3Schema = z.object({
   kharifCashAccount: dmrAccountSchema,
@@ -69,6 +76,7 @@ export const CreateUser: React.FC = () => {
     getValues,
     setValue,
     reset,
+    watch,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(
@@ -78,6 +86,7 @@ export const CreateUser: React.FC = () => {
       name: "",
       fatherName: "",
       mobile: "",
+      dob: "",
       aadhar: "",
       pan: "",
       samagraId: "",
@@ -98,7 +107,7 @@ export const CreateUser: React.FC = () => {
     name: "landRecords",
   });
 
-  const watchedLandRecords = getValues("landRecords") || [];
+  const watchedLandRecords = watch("landRecords") || [];
   const calculatedTotalRakhva = watchedLandRecords.reduce((sum, item) => {
     return sum + (Number(item?.rakhva) || 0);
   }, 0);
@@ -106,7 +115,7 @@ export const CreateUser: React.FC = () => {
   const handleNext = async () => {
     let isValid = false;
     if (step === 1) {
-      isValid = await trigger(["name", "fatherName", "mobile", "aadhar", "pan", "samagraId"]);
+      isValid = await trigger(["name", "fatherName", "mobile", "dob", "aadhar", "pan", "samagraId"]);
       if (isValid) setStep(2);
     } else if (step === 2) {
       isValid = await trigger(["jila", "tehsil", "gao", "landRecords"]);
@@ -144,6 +153,7 @@ export const CreateUser: React.FC = () => {
             name: "",
             fatherName: "",
             mobile: "",
+            dob: "",
             aadhar: "",
             pan: "",
             samagraId: "",
@@ -282,28 +292,44 @@ export const CreateUser: React.FC = () => {
                 />
                 {errors.mobile && (
                   <p className="text-red-600 text-xs font-bold mt-1 uppercase">
-                    {errors.mobile.message}
+                     {errors.mobile.message}
                   </p>
                 )}
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
-                  Aadhar Card Number (12 Digits) *
+                  Date of Birth *
+                </label>
+                <input
+                  type="date"
+                  className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
+                  {...register("dob")}
+                />
+                {errors.dob && (
+                  <p className="text-red-655 text-xs font-bold mt-1 uppercase">
+                    {errors.dob.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
+                  Aadhar Card Number *
                 </label>
                 <input
                   type="text"
-                  maxLength={12}
+                  maxLength={19}
                   className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
-                  placeholder="e.g. 543210987654"
+                  placeholder="e.g. 5432-1098-7654"
                   {...register("aadhar")}
                   onChange={(e) => {
-                    setValue("aadhar", e.target.value.replace(/\D/g, ""));
+                    setValue("aadhar", formatAadhar(e.target.value));
                     trigger("aadhar");
                   }}
                 />
                 {errors.aadhar && (
-                  <p className="text-red-650 text-xs font-bold mt-1 uppercase">
+                  <p className="text-red-655 text-xs font-bold mt-1 uppercase">
                     {errors.aadhar.message}
                   </p>
                 )}
@@ -542,7 +568,7 @@ export const CreateUser: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
-                  Kharif Cash Account Number
+                  Kharif Cash Account Number *
                 </label>
                 <input
                   type="text"
@@ -564,7 +590,7 @@ export const CreateUser: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
-                  Kharif Kind Account Number
+                  Kharif Kind Account Number *
                 </label>
                 <input
                   type="text"
@@ -586,7 +612,7 @@ export const CreateUser: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
-                  Rabi Cash Account Number
+                  Rabi Cash Account Number *
                 </label>
                 <input
                   type="text"
@@ -608,7 +634,7 @@ export const CreateUser: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
-                  Rabi Kind Account Number
+                  Rabi Kind Account Number *
                 </label>
                 <input
                   type="text"
@@ -673,6 +699,12 @@ export const CreateUser: React.FC = () => {
                   <div className="flex justify-between md:block border-b border-gray-100 dark:border-gray-800 md:border-b-0 pb-1">
                     <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Mobile Number</dt>
                     <dd className="font-bold text-gray-955 dark:text-white">{formValues.mobile}</dd>
+                  </div>
+                  <div className="flex justify-between md:block border-b border-gray-100 dark:border-gray-800 md:border-b-0 pb-1">
+                    <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Date of Birth</dt>
+                    <dd className="font-bold text-gray-955 dark:text-white">
+                      {formValues.dob ? new Date(formValues.dob).toLocaleDateString("en-IN") : "N/A"}
+                    </dd>
                   </div>
                   <div className="flex justify-between md:block border-b border-gray-100 dark:border-gray-800 md:border-b-0 pb-1">
                     <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Aadhar Card</dt>

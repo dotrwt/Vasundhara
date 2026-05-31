@@ -36,15 +36,19 @@ const userSchema = new Schema<IUser>(
         message: "Mobile number must be exactly 10 digits",
       },
     },
+    dob: {
+      type: Date,
+      required: [true, "Date of birth is required"],
+    },
     aadhar: {
       type: String,
       required: [true, "Aadhar number is required"],
       unique: true,
       validate: {
         validator: function (v: string) {
-          return /^\d{12}$/.test(v);
+          return /^\d{4}-\d{4}-\d{4}(-\d{4})?$/.test(v);
         },
-        message: "Aadhar number must be exactly 12 digits",
+        message: "Aadhar number must be formatted as XXXX-XXXX-XXXX or XXXX-XXXX-XXXX-XXXX",
       },
     },
     pan: {
@@ -72,10 +76,10 @@ const userSchema = new Schema<IUser>(
     },
     kharifCashAccount: {
       type: String,
-      required: false,
+      required: [true, "Kharif Cash Account is required"],
       validate: {
         validator: function (v: string) {
-          return !v || /^\d{9,18}$/.test(v);
+          return /^\d{9,18}$/.test(v);
         },
         message: "Kharif Cash Account must be between 9 and 18 digits",
       },
@@ -83,10 +87,10 @@ const userSchema = new Schema<IUser>(
     },
     kharifKindAccount: {
       type: String,
-      required: false,
+      required: [true, "Kharif Kind Account is required"],
       validate: {
         validator: function (v: string) {
-          return !v || /^\d{9,18}$/.test(v);
+          return /^\d{9,18}$/.test(v);
         },
         message: "Kharif Kind Account must be between 9 and 18 digits",
       },
@@ -94,10 +98,10 @@ const userSchema = new Schema<IUser>(
     },
     rabiCashAccount: {
       type: String,
-      required: false,
+      required: [true, "Rabi Cash Account is required"],
       validate: {
         validator: function (v: string) {
-          return !v || /^\d{9,18}$/.test(v);
+          return /^\d{9,18}$/.test(v);
         },
         message: "Rabi Cash Account must be between 9 and 18 digits",
       },
@@ -105,10 +109,10 @@ const userSchema = new Schema<IUser>(
     },
     rabiKindAccount: {
       type: String,
-      required: false,
+      required: [true, "Rabi Kind Account is required"],
       validate: {
         validator: function (v: string) {
-          return !v || /^\d{9,18}$/.test(v);
+          return /^\d{9,18}$/.test(v);
         },
         message: "Rabi Kind Account must be between 9 and 18 digits",
       },
