@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useAuth } from "../context/AuthContext";
 import { apiLogin } from "../api/auth";
+import axiosInstance from "../api/axios";
 import { toast } from "sonner";
 import logo from "../assets/Vasundhara_logo2.png";
 
@@ -20,6 +21,28 @@ export const Login: React.FC = () => {
   const { login } = useAuth();
   const [apiError, setApiError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isConnected, setIsConnected] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const checkConnection = async () => {
+      try {
+        const response = await axiosInstance.get("/health");
+        if (response.data && response.data.success) {
+          setIsConnected(true);
+          const notified = sessionStorage.getItem("backend_connected_notified");
+          if (!notified) {
+            toast.success("Backend server connected successfully");
+            sessionStorage.setItem("backend_connected_notified", "true");
+          }
+        } else {
+          setIsConnected(false);
+        }
+      } catch (error) {
+        setIsConnected(false);
+      }
+    };
+    checkConnection();
+  }, []);
 
   const {
     register,
@@ -69,6 +92,22 @@ export const Login: React.FC = () => {
           <p className="text-[10px] text-gray-500 dark:text-gray-400 font-extrabold uppercase mt-1">
             Department of Land Records & Audits
           </p>
+          <div className="flex items-center justify-center gap-1.5 mt-3">
+            <span className={`w-2 h-2 rounded-full ${
+              isConnected === true
+                ? "bg-green-500 animate-pulse"
+                : isConnected === false
+                ? "bg-red-500"
+                : "bg-yellow-500 animate-bounce"
+            }`}></span>
+            <span className="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
+              {isConnected === true
+                ? "Server Connected"
+                : isConnected === false
+                ? "Server Offline"
+                : "Checking Server..."}
+            </span>
+          </div>
         </div>
 
         <h2 className="text-sm font-bold mb-6 text-gray-800 dark:text-gray-200 border-l-4 border-blue-600 pl-2 uppercase tracking-wide">

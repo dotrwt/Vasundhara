@@ -65,6 +65,9 @@ app.use("/api/users", userRoutes);
 app.get("/health", (req, res) => {
   res.status(200).json({ success: true, message: "Server is healthy" });
 });
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ success: true, message: "Server is healthy" });
+});
 
 // 404 route handler
 app.use((req, res, next) => {

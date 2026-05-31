@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import vasundharaLogo from "../assets/Vasundhara_logo2.png";
 import "./LandingPage.css";
 
 export const LandingPage: React.FC = () => {
@@ -32,7 +33,8 @@ export const LandingPage: React.FC = () => {
       {/* NAV */}
       <nav>
         <div className="nav-logo">
-          वसुंधरा <span>Vasundhara</span>
+          <img src={vasundharaLogo} alt="Vasundhara Logo" />
+          <span>Vasundhara</span>
         </div>
         <ul className="nav-links">
           <li>
@@ -283,7 +285,7 @@ export const LandingPage: React.FC = () => {
             <span className="pill">MongoDB</span>
             <span className="pill">TypeScript</span>
             <span className="pill">JWT Auth</span>
-            <span className="pill">Tailwind CSS</span>
+            <span className="pill">Vanilla CSS</span>
           </div>
         </div>
         <div className="about-right reveal">
@@ -323,9 +325,10 @@ export const LandingPage: React.FC = () => {
       {/* FOOTER */}
       <footer>
         <div className="footer-logo">
-          वसुंधरा <span>Vasundhara</span>
+          <img src={vasundharaLogo} alt="Vasundhara Logo" />
+          <span>Vasundhara</span>
         </div>
-        <div className="footer-copy">© 2025 Vasundhara. Land Registry Portal.</div>
+        <div className="footer-copy">© 2026 Vasundhara. Land Registry Portal.</div>
         <div className="footer-links">
           <a href="https://github.com/dotrwt/Vasundhara">GitHub</a>
           <a href="#">Privacy</a>
