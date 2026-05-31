@@ -1,6 +1,6 @@
 <div align='center'>
 
-<img src='' alt='logo'>
+<img src='https://github.com/dotrwt/Vasundhara/blob/main/frontend/src/assets/Vasundhara_logo2.png' alt='logo' height='200'>
 
 # 🌿 Vasundhara — Land Registry & Audit Portal
 
@@ -10,7 +10,7 @@ A complete, production-ready **Land Audit Registry and User Management Portal** 
 
 Live at : <a href='https://vlms.dotrwt.in'>https://vlms.dotrwt.in</a>
 
-<img src='' alt='UI'>
+<img src='https://github.com/dotrwt/Vasundhara/blob/main/VLSM_UI.png' alt='UI'>
 
 ---
 
