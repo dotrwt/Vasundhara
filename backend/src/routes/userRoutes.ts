@@ -30,19 +30,10 @@ const userValidationRules = [
   body("samagraId", "Samagra ID must be exactly 9 digits")
     .optional({ checkFalsy: true })
     .matches(/^\d{9}$/),
-  body("gender", "Gender must be Male, Female, or Other")
-    .optional({ checkFalsy: true })
-    .isIn(["Male", "Female", "Other"]),
-  body("farmerCategory", "Invalid Farmer Category")
-    .optional({ checkFalsy: true })
-    .isIn(["Marginal", "Small", "Semi-Medium", "Medium", "Large"]),
-  body("bankAccountNo", "Bank Account number must be between 9 and 18 digits")
-    .optional({ checkFalsy: true })
-    .matches(/^\d{9,18}$/),
-  body("ifscCode", "IFSC code must be in standard Indian format")
-    .optional({ checkFalsy: true })
-    .toUpperCase()
-    .matches(/^[A-Z]{4}0[A-Z0-9]{6}$/),
+  body("kharifCashAccount", "Kharif Cash Account must be between 9 and 18 digits").matches(/^\d{9,18}$/),
+  body("kharifKindAccount", "Kharif Kind Account must be between 9 and 18 digits").matches(/^\d{9,18}$/),
+  body("rabiCashAccount", "Rabi Cash Account must be between 9 and 18 digits").matches(/^\d{9,18}$/),
+  body("rabiKindAccount", "Rabi Kind Account must be between 9 and 18 digits").matches(/^\d{9,18}$/),
   body("jila", "Jila is required").notEmpty().trim(),
   body("tehsil", "Tehsil is required").notEmpty().trim(),
   body("gao", "Village name (Gao) is required").notEmpty().trim(),

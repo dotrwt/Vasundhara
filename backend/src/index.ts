@@ -7,7 +7,6 @@ import cors from "cors";
 import { connectDB } from "./config/db";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
-import dmrAcRoutes from "./routes/dmrAcRoutes";
 import { errorHandler } from "./middleware/errorHandler";
 
 const app = express();
@@ -61,7 +60,6 @@ if (process.env.NODE_ENV !== "production") {
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/dmrac", dmrAcRoutes);
 
 // Basic health check route
 app.get("/health", (req, res) => {

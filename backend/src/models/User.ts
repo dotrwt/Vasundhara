@@ -70,38 +70,47 @@ const userSchema = new Schema<IUser>(
       },
       trim: true,
     },
-    gender: {
+    kharifCashAccount: {
       type: String,
-      required: false,
-      enum: ["Male", "Female", "Other"],
-      trim: true,
-    },
-    farmerCategory: {
-      type: String,
-      required: false,
-      enum: ["Marginal", "Small", "Semi-Medium", "Medium", "Large"],
-      trim: true,
-    },
-    bankAccountNo: {
-      type: String,
-      required: false,
+      required: [true, "Kharif Cash Account is required"],
       validate: {
         validator: function (v: string) {
-          return !v || /^\d{9,18}$/.test(v);
+          return /^\d{9,18}$/.test(v);
         },
-        message: "Bank Account number must be between 9 and 18 digits",
+        message: "Kharif Cash Account must be between 9 and 18 digits",
       },
       trim: true,
     },
-    ifscCode: {
+    kharifKindAccount: {
       type: String,
-      required: false,
-      uppercase: true,
+      required: [true, "Kharif Kind Account is required"],
       validate: {
         validator: function (v: string) {
-          return !v || /^[A-Z]{4}0[A-Z0-9]{6}$/.test(v);
+          return /^\d{9,18}$/.test(v);
         },
-        message: "IFSC code must be in standard Indian format (e.g. SBIN0001234)",
+        message: "Kharif Kind Account must be between 9 and 18 digits",
+      },
+      trim: true,
+    },
+    rabiCashAccount: {
+      type: String,
+      required: [true, "Rabi Cash Account is required"],
+      validate: {
+        validator: function (v: string) {
+          return /^\d{9,18}$/.test(v);
+        },
+        message: "Rabi Cash Account must be between 9 and 18 digits",
+      },
+      trim: true,
+    },
+    rabiKindAccount: {
+      type: String,
+      required: [true, "Rabi Kind Account is required"],
+      validate: {
+        validator: function (v: string) {
+          return /^\d{9,18}$/.test(v);
+        },
+        message: "Rabi Kind Account must be between 9 and 18 digits",
       },
       trim: true,
     },

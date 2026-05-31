@@ -20,10 +20,10 @@ export interface User {
   panFile?: string;
   farmerId: string;
   samagraId?: string;
-  gender?: string;
-  farmerCategory?: string;
-  bankAccountNo?: string;
-  ifscCode?: string;
+  kharifCashAccount: string;
+  kharifKindAccount: string;
+  rabiCashAccount: string;
+  rabiKindAccount: string;
   jila: string;
   tehsil: string;
   gao: string;
@@ -35,21 +35,6 @@ export interface User {
   updatedAt: string;
 }
 
-export interface DmrAc {
-  id: string;
-  _id?: string;
-  farmerName: string;
-  farmerId?: User | string;
-  kharifCash: number;
-  kharifKind: number;
-  rabiCash: number;
-  rabiKind: number;
-  remarks?: string;
-  createdBy: Admin | string;
-  updatedBy?: Admin | string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 export interface ApiSuccessResponse<T> {
   success: boolean;

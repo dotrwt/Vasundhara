@@ -116,35 +116,35 @@ export const ViewUser: React.FC = () => {
                 {user.pan}
               </dd>
             </div>
-            <div className="border-b border-gray-100 dark:border-gray-800 pb-2">
+            <div className="pb-2">
               <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Samagra ID</dt>
               <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5">
                 {user.samagraId || "N/A"}
               </dd>
             </div>
+          </dl>
+        </div>
+
+        <div>
+          <h3 className="text-xs font-bold text-gray-805 dark:text-gray-200 border-b border-gray-200 dark:border-gray-800 pb-2 mb-4 uppercase tracking-wider">
+            DMR Accounts
+          </h3>
+          <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3 text-sm">
             <div className="border-b border-gray-100 dark:border-gray-800 pb-2">
-              <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Gender</dt>
-              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5">
-                {user.gender || "N/A"}
-              </dd>
+              <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Kharif Cash Account</dt>
+              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5 font-mono">{user.kharifCashAccount}</dd>
             </div>
             <div className="border-b border-gray-100 dark:border-gray-800 pb-2">
-              <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Farmer Category</dt>
-              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5">
-                {user.farmerCategory || "N/A"}
-              </dd>
+              <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Kharif Kind Account</dt>
+              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5 font-mono">{user.kharifKindAccount}</dd>
             </div>
             <div className="border-b border-gray-100 dark:border-gray-800 pb-2">
-              <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Bank Account No</dt>
-              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5 font-mono">
-                {user.bankAccountNo || "N/A"}
-              </dd>
+              <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Rabi Cash Account</dt>
+              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5 font-mono">{user.rabiCashAccount}</dd>
             </div>
             <div className="border-b border-gray-100 dark:border-gray-800 pb-2">
-              <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Bank IFSC Code</dt>
-              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5 font-mono uppercase">
-                {user.ifscCode || "N/A"}
-              </dd>
+              <dt className="text-gray-500 dark:text-gray-400 font-bold uppercase text-[10px]">Rabi Kind Account</dt>
+              <dd className="font-bold text-base text-gray-900 dark:text-white mt-0.5 font-mono">{user.rabiKindAccount}</dd>
             </div>
           </dl>
         </div>

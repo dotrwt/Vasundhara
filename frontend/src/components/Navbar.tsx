@@ -37,18 +37,12 @@ export const Navbar: React.FC = () => {
 
       <div className="flex items-center gap-4">
         {admin && (
-          <div className="flex items-center gap-4 mr-2 border-r border-gray-200 dark:border-gray-800 pr-4">
+          <div className="flex items-center gap-4 mr-2">
             <button
               onClick={() => navigate("/dashboard")}
               className="text-[10px] md:text-xs font-bold text-gray-600 dark:text-gray-300 hover:text-earth dark:hover:text-gold uppercase tracking-widest transition-colors cursor-pointer"
             >
               Land Records
-            </button>
-            <button
-              onClick={() => navigate("/dmrac")}
-              className="text-[10px] md:text-xs font-bold text-gray-600 dark:text-gray-300 hover:text-earth dark:hover:text-gold uppercase tracking-widest transition-colors cursor-pointer"
-            >
-              DMR AC
             </button>
           </div>
         )}

@@ -12,7 +12,7 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
     const limit = parseInt(req.query.limit as string) || 10;
     const search = (req.query.search as string) || "";
 
-    const query: any = {};
+    const query: any = { createdBy: req.adminId };
     if (search.trim()) {
       const searchRegex = new RegExp(search.trim(), "i");
       query.$or = [
@@ -84,7 +84,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
 // @access  Private
 export const getUserById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = await User.findById(req.params.id)
+    const user = await User.findOne({ _id: req.params.id, createdBy: req.adminId })
       .populate("createdBy", "name email")
       .populate("updatedBy", "name email");
 
@@ -117,7 +117,7 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
       });
     }
 
-    const user = await User.findById(req.params.id);
+    const user = await User.findOne({ _id: req.params.id, createdBy: req.adminId });
 
     if (!user) {
       return res.status(404).json({
@@ -150,7 +150,7 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
 // @access  Private
 export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findOne({ _id: req.params.id, createdBy: req.adminId });
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -158,7 +158,7 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
       });
     }
 
-    await User.findByIdAndDelete(req.params.id);
+    await User.deleteOne({ _id: req.params.id, createdBy: req.adminId });
 
     return res.status(200).json({
       success: true,
@@ -174,7 +174,7 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
 // @access  Private
 export const exportUsersToExcel = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const users = await User.find({}).sort({ createdAt: -1 });
+    const users = await User.find({ createdBy: req.adminId }).sort({ createdAt: -1 });
 
     const excelData = users.map((user) => ({
       Name: user.name,
@@ -183,10 +183,10 @@ export const exportUsersToExcel = async (req: Request, res: Response, next: Next
       Aadhar: user.aadhar,
       PAN: user.pan,
       "Samagra ID": user.samagraId || "",
-      Gender: user.gender || "",
-      "Farmer Category": user.farmerCategory || "",
-      "Bank Account No": user.bankAccountNo || "",
-      "IFSC Code": user.ifscCode || "",
+      "Kharif Cash Account": user.kharifCashAccount,
+      "Kharif Kind Account": user.kharifKindAccount,
+      "Rabi Cash Account": user.rabiCashAccount,
+      "Rabi Kind Account": user.rabiKindAccount,
       Jila: user.jila,
       Tehsil: user.tehsil,
       Village: user.gao,
@@ -210,10 +210,10 @@ export const exportUsersToExcel = async (req: Request, res: Response, next: Next
       { wch: 18 }, // Aadhar
       { wch: 15 }, // PAN
       { wch: 15 }, // Samagra ID
-      { wch: 10 }, // Gender
-      { wch: 18 }, // Category
-      { wch: 20 }, // Bank Acc
-      { wch: 15 }, // IFSC
+      { wch: 20 }, // Kharif Cash
+      { wch: 20 }, // Kharif Kind
+      { wch: 20 }, // Rabi Cash
+      { wch: 20 }, // Rabi Kind
       { wch: 15 }, // Jila
       { wch: 15 }, // Tehsil
       { wch: 15 }, // Village

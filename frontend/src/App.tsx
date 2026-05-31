@@ -10,8 +10,6 @@ import CreateUser from "./pages/CreateUser";
 import EditUser from "./pages/EditUser";
 import ViewUser from "./pages/ViewUser";
 import LandingPage from "./pages/LandingPage";
-import DmrAcList from "./pages/DmrAcList";
-import DmrAcForm from "./pages/DmrAcForm";
 import NotFound from "./pages/NotFound";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "./context/ThemeContext";
@@ -36,11 +34,6 @@ export const App: React.FC = () => {
               <Route path="/users/new" element={<CreateUser />} />
               <Route path="/users/:id" element={<ViewUser />} />
               <Route path="/users/:id/edit" element={<EditUser />} />
-              
-              {/* DMR AC Routes */}
-              <Route path="/dmrac" element={<DmrAcList />} />
-              <Route path="/dmrac/new" element={<DmrAcForm />} />
-              <Route path="/dmrac/:id/edit" element={<DmrAcForm />} />
             </Route>
           </Route>
 
