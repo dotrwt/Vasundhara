@@ -39,7 +39,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="block w-full pl-10 pr-3 py-2 border-2 border-gray-400 bg-white placeholder-gray-500 text-gray-900 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 sm:text-base h-11"
+        className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-650 dark:focus:border-blue-500 sm:text-sm h-11 rounded-md transition-all"
         placeholder={placeholder}
       />
     </div>

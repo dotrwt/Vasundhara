@@ -74,7 +74,6 @@ export const EditUser: React.FC = () => {
         const response = await apiGetUserById(id);
         if (response.success && response.data) {
           const user = response.data;
-          // Reset form with fetched data
           reset({
             name: user.name,
             fatherName: user.fatherName,
@@ -106,9 +105,7 @@ export const EditUser: React.FC = () => {
   }, [id, reset, navigate]);
 
   // Watch land records to calculate total rakhva
-  const watchedLandRecords = control._fields.landRecords
-    ? getValues("landRecords") || []
-    : [];
+  const watchedLandRecords = getValues("landRecords") || [];
   const calculatedTotalRakhva = watchedLandRecords.reduce((sum, item) => {
     return sum + (Number(item?.rakhva) || 0);
   }, 0);
@@ -117,9 +114,7 @@ export const EditUser: React.FC = () => {
     if (!id) return;
     setIsSaving(true);
     try {
-      // Enforce PAN uppercase
       values.pan = values.pan.toUpperCase();
-
       const response = await apiUpdateUser(id, values);
       if (response.success) {
         toast.success("Registry record updated successfully");
@@ -138,8 +133,8 @@ export const EditUser: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="bg-white border-2 border-gray-400 p-12 text-center text-gray-600 shadow-sm max-w-3xl mx-auto">
-        <p className="font-bold text-sm tracking-wider uppercase animate-pulse">
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-12 text-center text-gray-500 dark:text-gray-400 shadow-md max-w-3xl mx-auto rounded-xl">
+        <p className="font-bold text-xs tracking-wider uppercase animate-pulse">
           Retrieving Profile Registry Data...
         </p>
       </div>
@@ -147,20 +142,20 @@ export const EditUser: React.FC = () => {
   }
 
   return (
-    <div className="bg-white border-2 border-gray-400 p-6 md:p-8 shadow-sm max-w-3xl mx-auto">
+    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-6 md:p-8 rounded-xl shadow-md max-w-3xl mx-auto transition-all duration-300">
       {/* Title */}
-      <div className="border-b-2 border-gray-300 pb-4 mb-6 flex items-center justify-between">
+      <div className="border-b border-gray-200 dark:border-gray-800 pb-4 mb-6 flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-gray-900 uppercase tracking-wide">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white uppercase tracking-wide">
             Edit Audit Registry Entry
           </h2>
-          <p className="text-xs text-gray-500 font-bold uppercase mt-1">
+          <p className="text-xs text-gray-505 dark:text-gray-400 font-bold uppercase mt-1">
             Update registry details below
           </p>
         </div>
         <button
           onClick={() => navigate("/dashboard")}
-          className="h-10 px-4 border border-gray-400 bg-gray-50 hover:bg-gray-100 text-gray-800 font-bold text-sm uppercase tracking-wider cursor-pointer"
+          className="h-10 px-4 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300 font-bold text-xs uppercase tracking-wider rounded-md transition-colors cursor-pointer"
         >
           Back
         </button>
@@ -169,55 +164,55 @@ export const EditUser: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         {/* Personal details */}
         <div>
-          <h3 className="text-base font-bold text-gray-800 border-b border-gray-300 pb-2 mb-4 uppercase tracking-wider">
+          <h3 className="text-xs font-bold text-gray-800 dark:text-gray-200 border-b border-gray-200 dark:border-gray-800 pb-2 mb-4 uppercase tracking-wider">
             Personal Information
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2 uppercase">
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
                 Full Name *
               </label>
               <input
                 type="text"
                 disabled={isSaving}
-                className="block w-full h-11 px-3 border border-gray-400 focus:outline-none focus:border-blue-600 text-base"
+                className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
                 placeholder="Enter full name"
                 {...register("name")}
               />
               {errors.name && (
-                <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">
                   {errors.name.message}
                 </p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2 uppercase">
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
                 Father's Name *
               </label>
               <input
                 type="text"
                 disabled={isSaving}
-                className="block w-full h-11 px-3 border border-gray-400 focus:outline-none focus:border-blue-600 text-base"
+                className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-805 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
                 placeholder="Enter father's name"
                 {...register("fatherName")}
               />
               {errors.fatherName && (
-                <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">
                   {errors.fatherName.message}
                 </p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2 uppercase">
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
                 Mobile Number (10 Digits) *
               </label>
               <input
                 type="text"
                 maxLength={10}
                 disabled={isSaving}
-                className="block w-full h-11 px-3 border border-gray-400 focus:outline-none focus:border-blue-600 text-base"
+                className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
                 placeholder="e.g. 9876543210"
                 {...register("mobile")}
                 onChange={(e) => {
@@ -226,21 +221,21 @@ export const EditUser: React.FC = () => {
                 }}
               />
               {errors.mobile && (
-                <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">
                   {errors.mobile.message}
                 </p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2 uppercase">
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
                 Aadhar Card Number (12 Digits) *
               </label>
               <input
                 type="text"
                 maxLength={12}
                 disabled={isSaving}
-                className="block w-full h-11 px-3 border border-gray-400 focus:outline-none focus:border-blue-600 text-base"
+                className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
                 placeholder="e.g. 543210987654"
                 {...register("aadhar")}
                 onChange={(e) => {
@@ -249,21 +244,21 @@ export const EditUser: React.FC = () => {
                 }}
               />
               {errors.aadhar && (
-                <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">
                   {errors.aadhar.message}
                 </p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2 uppercase">
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
                 PAN Card Number (10 Characters) *
               </label>
               <input
                 type="text"
                 maxLength={10}
                 disabled={isSaving}
-                className="block w-full h-11 px-3 border border-gray-400 focus:outline-none focus:border-blue-600 text-base font-mono uppercase"
+                className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-805 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white font-mono uppercase transition-all"
                 placeholder="ABCDE1234F"
                 {...register("pan")}
                 onChange={(e) => {
@@ -272,7 +267,7 @@ export const EditUser: React.FC = () => {
                 }}
               />
               {errors.pan && (
-                <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                <p className="text-red-650 dark:text-red-400 text-xs font-bold mt-1 uppercase">
                   {errors.pan.message}
                 </p>
               )}
@@ -282,75 +277,75 @@ export const EditUser: React.FC = () => {
 
         {/* Location & Land records */}
         <div>
-          <h3 className="text-base font-bold text-gray-800 border-b border-gray-300 pb-2 mb-4 uppercase tracking-wider">
+          <h3 className="text-xs font-bold text-gray-800 dark:text-gray-200 border-b border-gray-200 dark:border-gray-800 pb-2 mb-4 uppercase tracking-wider">
             Jurisdiction & Land Records
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2 uppercase">
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
                 District (Jila) *
               </label>
               <input
                 type="text"
                 disabled={isSaving}
-                className="block w-full h-11 px-3 border border-gray-400 focus:outline-none focus:border-blue-600 text-base"
+                className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-808 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-505 text-sm rounded-md dark:text-white transition-all"
                 placeholder="District name"
                 {...register("jila")}
               />
               {errors.jila && (
-                <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">
                   {errors.jila.message}
                 </p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2 uppercase">
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
                 Tehsil *
               </label>
               <input
                 type="text"
                 disabled={isSaving}
-                className="block w-full h-11 px-3 border border-gray-400 focus:outline-none focus:border-blue-600 text-base"
+                className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-808 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-505 text-sm rounded-md dark:text-white transition-all"
                 placeholder="Tehsil name"
                 {...register("tehsil")}
               />
               {errors.tehsil && (
-                <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">
                   {errors.tehsil.message}
                 </p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-900 mb-2 uppercase">
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
                 Village (Gao) *
               </label>
               <input
                 type="text"
                 disabled={isSaving}
-                className="block w-full h-11 px-3 border border-gray-400 focus:outline-none focus:border-blue-600 text-base"
+                className="block w-full h-11 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-808 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-505 text-sm rounded-md dark:text-white transition-all"
                 placeholder="Village name"
                 {...register("gao")}
               />
               {errors.gao && (
-                <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">
                   {errors.gao.message}
                 </p>
               )}
             </div>
           </div>
 
-          <div className="border border-gray-300 p-4 bg-gray-50">
+          <div className="border border-gray-250/10 dark:border-gray-800 p-4 bg-gray-50/20 dark:bg-gray-850/10 rounded-lg">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider">
+              <h4 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">
                 Land Survey Records List
               </h4>
               <button
                 type="button"
                 disabled={isSaving}
                 onClick={() => append({ surveyNumber: "", rakhva: 0.1 })}
-                className="h-9 px-3 border border-gray-400 bg-white hover:bg-gray-100 text-gray-800 font-bold uppercase tracking-wider text-xs flex items-center gap-1 cursor-pointer"
+                className="h-9 px-3 border border-gray-350 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300 font-bold uppercase tracking-wider text-[10px] flex items-center gap-1 cursor-pointer rounded transition-all shadow-sm"
               >
                 <Plus className="h-3.5 w-3.5" />
                 Add Row
@@ -358,7 +353,7 @@ export const EditUser: React.FC = () => {
             </div>
 
             {errors.landRecords?.message && (
-              <p className="text-red-600 text-xs font-bold mb-4 uppercase">
+              <p className="text-red-600 dark:text-red-400 text-xs font-bold mb-4 uppercase">
                 {errors.landRecords.message}
               </p>
             )}
@@ -367,54 +362,54 @@ export const EditUser: React.FC = () => {
               {fields.map((field, index) => (
                 <div
                   key={field.id}
-                  className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 bg-white p-4 border border-gray-300"
+                  className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 bg-white dark:bg-gray-850/30 p-4 border border-gray-200 dark:border-gray-800 rounded-lg transition-colors"
                 >
                   <div className="flex-1">
-                    <label className="block text-xs font-bold text-gray-700 mb-1 uppercase">
+                    <label className="block text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1 uppercase">
                       Survey / Khasra No. *
                     </label>
                     <input
                       type="text"
                       disabled={isSaving}
-                      className="block w-full h-10 px-3 border border-gray-400 focus:outline-none focus:border-blue-600 text-sm"
+                      className="block w-full h-10 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 text-sm rounded-md dark:text-white transition-all"
                       placeholder="Survey Number"
                       {...register(`landRecords.${index}.surveyNumber` as const)}
                     />
                     {errors.landRecords?.[index]?.surveyNumber && (
-                      <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                      <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">
                         {errors.landRecords[index]?.surveyNumber?.message}
                       </p>
                     )}
                   </div>
 
                   <div className="flex-1">
-                    <label className="block text-xs font-bold text-gray-700 mb-1 uppercase">
+                    <label className="block text-[10px] font-bold text-gray-550 dark:text-gray-400 mb-1 uppercase">
                       Rakhva (Hectares) *
                     </label>
                     <input
                       type="number"
                       step="0.0001"
                       disabled={isSaving}
-                      className="block w-full h-10 px-3 border border-gray-400 focus:outline-none focus:border-blue-600 text-sm"
+                      className="block w-full h-10 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-805 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-505 text-sm rounded-md dark:text-white transition-all"
                       placeholder="0.0000"
                       {...register(`landRecords.${index}.rakhva` as const, {
                         valueAsNumber: true,
                       })}
                     />
                     {errors.landRecords?.[index]?.rakhva && (
-                      <p className="text-red-600 text-xs font-bold mt-1 uppercase">
+                      <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">
                         {errors.landRecords[index]?.rakhva?.message}
                       </p>
                     )}
                   </div>
 
                   {fields.length > 1 && (
-                    <div className="flex items-end pt-5">
+                    <div className="flex items-end pt-4 sm:pt-5">
                       <button
                         type="button"
                         disabled={isSaving}
                         onClick={() => remove(index)}
-                        className="h-10 px-3 border border-red-300 bg-red-50 hover:bg-red-100 text-red-700 font-bold uppercase tracking-wider text-xs flex items-center justify-center cursor-pointer"
+                        className="h-10 w-10 border border-red-200 dark:border-red-950/30 bg-red-50/50 dark:bg-red-950/20 text-red-650 dark:text-red-400 hover:bg-red-100/50 dark:hover:bg-red-950/40 font-bold uppercase tracking-wider text-xs flex items-center justify-center cursor-pointer rounded-md transition-all shadow-sm"
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>
@@ -424,20 +419,20 @@ export const EditUser: React.FC = () => {
               ))}
             </div>
 
-            <div className="bg-blue-50 border border-blue-200 p-4 mt-4 flex items-center justify-between text-blue-900 font-bold">
-              <span className="text-sm uppercase tracking-wider">Calculated Total Area:</span>
-              <span className="text-xl font-extrabold">{calculatedTotalRakhva.toFixed(4)} Hectares</span>
+            <div className="bg-blue-50/50 dark:bg-blue-950/20 border border-blue-150/10 dark:border-blue-900/30 p-4 mt-4 flex items-center justify-between text-blue-800 dark:text-blue-400 font-bold rounded-lg transition-colors">
+              <span className="text-xs uppercase tracking-wider">Calculated Total Area:</span>
+              <span className="text-base font-black">{calculatedTotalRakhva.toFixed(4)} Hectares</span>
             </div>
           </div>
         </div>
 
         {/* Buttons */}
-        <div className="flex justify-between pt-4 border-t border-gray-300">
+        <div className="flex justify-between pt-4 border-t border-gray-250/10 dark:border-gray-800">
           <button
             type="button"
             disabled={isSaving}
             onClick={() => navigate("/dashboard")}
-            className="h-11 px-6 border border-gray-400 bg-gray-50 hover:bg-gray-100 text-gray-800 font-bold text-sm uppercase tracking-wider flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="h-11 px-5 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750 text-gray-750 dark:text-gray-300 font-bold text-xs uppercase tracking-wider flex items-center gap-2 cursor-pointer disabled:opacity-50 rounded-md transition-all"
           >
             <ArrowLeft className="h-4 w-4" />
             Cancel Changes
@@ -445,7 +440,7 @@ export const EditUser: React.FC = () => {
           <button
             type="submit"
             disabled={isSaving}
-            className="h-11 px-8 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-sm uppercase tracking-wider border-2 border-blue-700 flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="h-11 px-6 bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 cursor-pointer disabled:opacity-50 rounded-md transition-all shadow-sm hover:scale-[1.02] active:scale-[0.98]"
           >
             <Save className="h-4 w-4" />
             {isSaving ? "Saving Entry..." : "Save Audit Updates"}

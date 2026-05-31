@@ -6,6 +6,7 @@ import * as z from "zod";
 import { useAuth } from "../context/AuthContext";
 import { apiRegister } from "../api/auth";
 import { toast } from "sonner";
+import logo from "../assets/Vasundhara_logo2.png";
 
 const registerSchema = z.object({
   name: z.string().min(1, "Full name is required").trim(),
@@ -59,107 +60,109 @@ export const Register: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 font-sans text-gray-900">
-      <div className="w-full max-w-md bg-white p-8 border-2 border-gray-400 shadow-sm">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-955 p-4 font-sans text-gray-900 dark:text-white transition-colors duration-300">
+      <div className="w-full max-w-md bg-white dark:bg-gray-900 p-8 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-xl transition-colors duration-300">
         {/* Header */}
-        <div className="text-center mb-6 border-b border-gray-300 pb-4">
-          <div className="inline-block bg-gray-100 p-2 border border-gray-300 mb-2">
-            <span className="font-extrabold text-sm uppercase tracking-widest text-gray-800">
-              OFFICIAL SYSTEM ACCESS
-            </span>
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900 uppercase">
-            User Management
+        <div className="text-center mb-6 border-b border-gray-250/10 dark:border-gray-800 pb-4">
+          <img src={logo} alt="Vasundhara Logo" className="h-16 mx-auto mb-3" />
+          <h1 className="text-2xl font-black tracking-tight text-gray-900 dark:text-white uppercase">
+            Vasundhara
           </h1>
-          <p className="text-xs text-gray-500 font-bold uppercase mt-1">
+          <p className="text-[10px] text-gray-500 dark:text-gray-400 font-extrabold uppercase mt-1">
             Department of Land Records & Audits
           </p>
         </div>
 
-        <h2 className="text-lg font-bold mb-6 text-gray-800 border-l-4 border-blue-600 pl-2 uppercase tracking-wide">
+        <h2 className="text-sm font-bold mb-6 text-gray-850 dark:text-gray-205 border-l-4 border-blue-600 pl-2 uppercase tracking-wide">
           Register Admin Account
         </h2>
 
         {apiError && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-400 text-red-700 text-sm font-semibold">
+          <div className="mb-6 p-4 bg-red-50/50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 text-red-650 dark:text-red-400 text-xs font-bold uppercase rounded-md">
             {apiError}
           </div>
         )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
-            <label htmlFor="name" className="block text-base font-bold text-gray-900 mb-2">
+            <label htmlFor="name" className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
               Full Name
             </label>
             <input
               id="name"
               type="text"
               disabled={isSubmitting}
-              className={`block w-full h-12 px-3 border-2 ${
-                errors.name ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-gray-400 focus:border-blue-600 focus:ring-blue-600"
-              } bg-white text-base focus:outline-none focus:ring-1`}
+              className={`block w-full h-11 px-3 border ${
+                errors.name
+                  ? "border-red-500 focus:ring-red-500/20 focus:border-red-500"
+                  : "border-gray-300 dark:border-gray-700 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500"
+              } bg-white dark:bg-gray-808 text-sm focus:outline-none focus:ring-2 rounded-md dark:text-white transition-all`}
               placeholder="e.g. Shri Rajesh Kumar"
               {...register("name")}
             />
             {errors.name && (
-              <p className="text-red-600 text-sm font-bold mt-1">{errors.name.message}</p>
+              <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">{errors.name.message}</p>
             )}
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-base font-bold text-gray-900 mb-2">
+            <label htmlFor="email" className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
               Email Address
             </label>
             <input
               id="email"
               type="email"
               disabled={isSubmitting}
-              className={`block w-full h-12 px-3 border-2 ${
-                errors.email ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-gray-400 focus:border-blue-600 focus:ring-blue-600"
-              } bg-white text-base focus:outline-none focus:ring-1`}
+              className={`block w-full h-11 px-3 border ${
+                errors.email
+                  ? "border-red-500 focus:ring-red-500/20 focus:border-red-500"
+                  : "border-gray-300 dark:border-gray-700 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500"
+              } bg-white dark:bg-gray-808 text-sm focus:outline-none focus:ring-2 rounded-md dark:text-white transition-all`}
               placeholder="admin@example.gov.in"
               {...register("email")}
             />
             {errors.email && (
-              <p className="text-red-600 text-sm font-bold mt-1">{errors.email.message}</p>
+              <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">{errors.email.message}</p>
             )}
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-base font-bold text-gray-900 mb-2">
+            <label htmlFor="password" className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
               Secret Password
             </label>
             <input
               id="password"
               type="password"
               disabled={isSubmitting}
-              className={`block w-full h-12 px-3 border-2 ${
-                errors.password ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-gray-400 focus:border-blue-600 focus:ring-blue-600"
-              } bg-white text-base focus:outline-none focus:ring-1`}
+              className={`block w-full h-11 px-3 border ${
+                errors.password
+                  ? "border-red-500 focus:ring-red-500/20 focus:border-red-500"
+                  : "border-gray-300 dark:border-gray-700 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500"
+              } bg-white dark:bg-gray-808 text-sm focus:outline-none focus:ring-2 rounded-md dark:text-white transition-all`}
               placeholder="••••••••"
               {...register("password")}
             />
             {errors.password && (
-              <p className="text-red-600 text-sm font-bold mt-1">{errors.password.message}</p>
+              <p className="text-red-600 dark:text-red-400 text-xs font-bold mt-1 uppercase">{errors.password.message}</p>
             )}
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full h-12 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-base uppercase tracking-wider border-2 border-blue-700 disabled:opacity-50 cursor-pointer flex items-center justify-center"
+            className="w-full h-11 bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white font-bold text-xs uppercase tracking-wider disabled:opacity-50 cursor-pointer flex items-center justify-center rounded-md transition-all shadow-sm hover:scale-[1.01] active:scale-[0.99]"
           >
             {isSubmitting ? "Creating Account..." : "Register Administrator"}
           </button>
         </form>
 
-        <div className="mt-8 pt-4 border-t border-gray-300 text-center">
-          <p className="text-sm text-gray-600 font-medium">
+        <div className="mt-8 pt-4 border-t border-gray-205 dark:border-gray-800 text-center">
+          <p className="text-xs text-gray-505 dark:text-gray-400 font-bold uppercase">
             Already registered?{" "}
             <button
               onClick={() => navigate("/login")}
               disabled={isSubmitting}
-              className="text-blue-700 hover:underline font-bold focus:outline-none cursor-pointer"
+              className="text-blue-700 dark:text-blue-400 hover:underline font-bold focus:outline-none cursor-pointer"
             >
               Back to Login
             </button>

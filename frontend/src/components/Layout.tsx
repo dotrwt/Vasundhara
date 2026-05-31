@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 
 export const Layout: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col font-sans antialiased text-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col font-sans antialiased text-gray-900 dark:text-gray-100 transition-colors duration-300">
       {/* Header / Navbar */}
       <Navbar />
 
@@ -14,8 +14,8 @@ export const Layout: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-300 py-4 px-6 mt-12 text-center text-xs text-gray-500 font-medium">
-        © {new Date().getFullYear()} National Land Information & Auditing Portal. All Rights Reserved.
+      <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-4 px-6 mt-12 text-center text-xs text-gray-500 dark:text-gray-400 font-medium transition-colors duration-300">
+        © {new Date().getFullYear()} Vasundhara National Land Information & Auditing Portal. All Rights Reserved.
       </footer>
     </div>
   );

@@ -10,10 +10,12 @@ import CreateUser from "./pages/CreateUser";
 import EditUser from "./pages/EditUser";
 import ViewUser from "./pages/ViewUser";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "./context/ThemeContext";
 
 export const App: React.FC = () => {
   return (
-    <AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
       <BrowserRouter>
         <Routes>
           {/* Public Routes */}
@@ -47,6 +49,7 @@ export const App: React.FC = () => {
         }}
       />
     </AuthProvider>
+    </ThemeProvider>
   );
 };
 
