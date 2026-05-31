@@ -1,133 +1,154 @@
-# User Management System
+<div align='center'>
 
-## Important Notice
-⚠️ **This application is for internal testing purposes only.** Figma Make is not intended for collecting or storing Personally Identifiable Information (PII) such as Aadhar numbers, PAN details, or other sensitive data in a production environment.
+# Vasundhara — Frontend
 
-## Getting Started
+</div>
 
-### First Time Setup
+The frontend is a **React + Vite + TypeScript** single-page application styled with **Tailwind CSS v4**. It provides a clean, responsive interface for admin authentication, land record management, and registry auditing.
 
-1. **Create an Admin Account**
-   
-   Click on "Create admin account" on the login page, or navigate to `/signup`.
-   
-   Fill in:
-   - Full Name
-   - Email
-   - Password (minimum 6 characters)
-   
-   Click "Create Account"
+---
 
-2. **Login**
-   
-   After creating the admin account, you'll be redirected to the login page. Enter your credentials to access the dashboard.
+## 📁 Directory Structure
 
-## Features
+```
+frontend/
+├── src/
+│   ├── api/
+│   │   ├── axios.ts           # Axios instance with base URL & auth header injection
+│   │   ├── auth.ts            # Login & register API methods
+│   │   └── users.ts           # Land record CRUD & export API methods
+│   ├── components/
+│   │   ├── Layout.tsx         # App shell with navbar
+│   │   ├── Navbar.tsx         # Top navigation bar
+│   │   ├── ProtectedRoute.tsx # Guards authenticated-only routes
+│   │   ├── SearchBar.tsx      # Debounced search input
+│   │   ├── Pagination.tsx     # Page navigation controls
+│   │   └── ConfirmDialog.tsx  # Reusable delete confirmation modal
+│   ├── context/
+│   │   └── AuthContext.tsx    # Global auth state provider (login, logout, token)
+│   ├── hooks/
+│   │   └── useUsers.ts        # Debounced search, pagination, and API interaction
+│   ├── pages/
+│   │   ├── Login.tsx          # Admin login page
+│   │   ├── Register.tsx       # Admin registration page
+│   │   ├── Dashboard.tsx      # Main registry table with search/export/delete
+│   │   ├── CreateUser.tsx     # Multi-step enrollment wizard
+│   │   ├── EditUser.tsx       # Edit an existing land record
+│   │   └── ViewUser.tsx       # Read-only detail view of a record
+│   ├── styles/
+│   │   └── index.css          # Tailwind v4 config, fonts, and global theme
+│   ├── types/
+│   │   └── index.ts           # Shared TypeScript interfaces (User, AuthResponse, etc.)
+│   ├── App.tsx                # Route definitions and Toast provider
+│   └── main.tsx               # React DOM mount point
+├── .env                       # Client environment variables
+├── package.json
+└── vite.config.ts             # Vite config with path aliases
+```
 
-### Authentication
-- Simple email/password login
-- Secure session management
-- Auto-confirmed email (no email server required)
+---
 
-### Dashboard
-- View all users in a table format
-- Search by Name, Mobile, Aadhar, PAN, or Village
-- Export data to CSV/Excel
-- Pagination for large datasets
+## Setup & Configuration
 
-### Create New User
-**Step 1: User Details**
-- Name
-- Father Name
-- Mobile Number (10 digits)
-- Aadhar Number (12 digits)
-- PAN Number (format: ABCDE1234F)
-- PAN File Upload (optional)
+### 1. Install dependencies
 
-**Step 2: Land Details**
-- Jila
-- Tehsil
-- Gao (Village)
-- Land Records (add multiple)
-  - Survey Number
-  - Rakhva
-- Auto-calculated Total Rakhva
+```bash
+cd frontend
+npm install
+```
 
-**Step 3: Preview**
-- Review all entered data
-- Edit if needed
-- Save options:
-  - Save & Create Another
-  - Save & Go to Dashboard
+### 2. Create a `.env` file
 
-### Edit User
-- Modify all user and land details
-- Real-time validation
-- Auto-calculated Total Rakhva
+```env
+VITE_API_URL=http://localhost:5000/api
+```
 
-### View User
-- Read-only view of all user information
-- Quick access to Edit mode
+> The backend must be running at the URL specified above.
 
-### Delete User
-- Confirmation dialog before deletion
-- Permanent removal from database
+### 3. Start the development server
 
-## Technical Details
+```bash
+npm run dev
+```
 
-### Architecture
-- **Frontend**: React + TypeScript + Tailwind CSS
-- **Router**: React Router (Data Mode)
-- **Backend**: Supabase Edge Functions (Hono server)
-- **Database**: Supabase Key-Value Store
-- **Authentication**: Supabase Auth
+Expected output:
 
-### Data Storage
-User data is stored in the Supabase KV store with the following structure:
-- User Details (name, father name, mobile, aadhar, pan, etc.)
-- Land Details (jila, tehsil, gao)
-- Land Records array (survey numbers and rakhva values)
-- Auto-calculated Total Rakhva
-- Timestamps (createdAt, updatedAt)
-- User references (createdBy, updatedBy)
+```
+  VITE v5.x.x  ready in Xms
 
-## UX Design Principles
+  ➜  Local:   http://localhost:5173/
+```
 
-This application follows government-form-like design principles:
-- ✅ Large, clear input fields
-- ✅ Visible labels (not just placeholders)
-- ✅ High contrast text for readability
-- ✅ Large primary buttons
-- ✅ Keyboard-friendly (Tab navigation)
-- ✅ Simple error messages in plain language
-- ✅ Minimal colors (white background, soft grey borders)
-- ✅ Desktop-first, but responsive
-- ✅ No unnecessary animations or gradients
+Open `http://localhost:5173` in your browser.
 
-## Validation Rules
+---
 
-### Mobile Number
-- Must be exactly 10 digits
-- Numeric only
+## Pages & Routes
 
-### Aadhar Number
-- Must be exactly 12 digits
-- Numeric only
+| Route       | Page       | Auth Required | Description                                |
+| ----------- | ---------- | ------------- | ------------------------------------------ |
+| `/login`    | Login      | ❌            | Admin sign-in                              |
+| `/register` | Register   | ❌            | Admin account creation                     |
+| `/`         | Dashboard  | ✅            | Paginated land registry with search/export |
+| `/create`   | CreateUser | ✅            | 3-step land record enrollment wizard       |
+| `/edit/:id` | EditUser   | ✅            | Edit an existing record                    |
+| `/view/:id` | ViewUser   | ✅            | Read-only record detail view               |
 
-### PAN Number
-- Format: 5 letters + 4 digits + 1 letter
-- Example: ABCDE1234F
-- Auto-converted to uppercase
+---
 
-### Land Records
-- Survey Number: Required, text
-- Rakhva: Required, must be greater than 0
+## Component Guide
 
-## Keyboard Shortcuts
-- **Tab**: Navigate between fields
-- **Enter**: Submit forms (on buttons)
-- **Escape**: Close dialogs
+### `AuthContext`
 
-## Support
+Provides `user`, `token`, `login()`, and `logout()` globally. Wrap the app with `<AuthProvider>` in `main.tsx`.
 
-For issues or questions, contact your system administrator.
+### `ProtectedRoute`
+
+Redirects unauthenticated users to `/login`. Wrap any private route with this component.
+
+### `useUsers` hook
+
+Handles:
+
+- Debounced search query state
+- Current page and total page count
+- Fetching, creating, updating, and deleting records via the API
+
+### `CreateUser` — Multi-step Wizard
+
+| Step                | Fields                                                                       |
+| ------------------- | ---------------------------------------------------------------------------- |
+| 1 — Personal        | Name, Father's Name, Mobile (10 digits), Aadhaar (12 digits), PAN (10 chars) |
+| 2 — Land & Location | District, Tehsil, Gaon, dynamic Survey Number + Rakhva (hectares) rows       |
+| 3 — Preview         | Read-only summary with running total of all land holdings                    |
+
+---
+
+## Key Dependencies
+
+| Package            | Purpose                          |
+| ------------------ | -------------------------------- |
+| `react`            | UI library                       |
+| `react-router-dom` | Client-side routing (v7)         |
+| `vite`             | Build tool and dev server        |
+| `tailwindcss`      | Utility-first CSS framework (v4) |
+| `react-hook-form`  | Form state management            |
+| `zod`              | Schema-based runtime validation  |
+| `axios`            | HTTP client                      |
+| `sonner`           | Toast notification library       |
+| `typescript`       | Static typing                    |
+
+---
+
+## 🔐Auth Flow
+
+1. Admin logs in via `/login` → receives JWT from the backend
+2. Token is stored in `AuthContext` and injected into all Axios requests via a request interceptor
+3. `ProtectedRoute` checks auth state on every navigation
+4. On logout, token is cleared and the user is redirected to `/login`
+
+---
+
+<p align="center">
+  Developed by <a href="https://dotrwt.in">dotrwt</a>
+</p>
