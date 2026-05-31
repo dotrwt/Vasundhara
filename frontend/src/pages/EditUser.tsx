@@ -38,11 +38,18 @@ const step2Schema = z.object({
     .min(1, "At least one land record is required"),
 });
 
+const dmrAccountSchema = z
+  .string()
+  .optional()
+  .refine((val) => !val || /^\d{9,18}$/.test(val), {
+    message: "Account number must be between 9 and 18 digits",
+  });
+
 const step3Schema = z.object({
-  kharifCashAccount: z.string().regex(/^\d{9,18}$/, "Kharif Cash Account must be 9 to 18 digits"),
-  kharifKindAccount: z.string().regex(/^\d{9,18}$/, "Kharif Kind Account must be 9 to 18 digits"),
-  rabiCashAccount: z.string().regex(/^\d{9,18}$/, "Rabi Cash Account must be 9 to 18 digits"),
-  rabiKindAccount: z.string().regex(/^\d{9,18}$/, "Rabi Kind Account must be 9 to 18 digits"),
+  kharifCashAccount: dmrAccountSchema,
+  kharifKindAccount: dmrAccountSchema,
+  rabiCashAccount: dmrAccountSchema,
+  rabiKindAccount: dmrAccountSchema,
 });
 
 const fullSchema = step1Schema.merge(step2Schema).merge(step3Schema);
@@ -571,7 +578,7 @@ export const EditUser: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
-                  Kharif Cash Account Number *
+                  Kharif Cash Account Number
                 </label>
                 <input
                   type="text"
@@ -585,7 +592,7 @@ export const EditUser: React.FC = () => {
                   }}
                 />
                 {errors.kharifCashAccount && (
-                  <p className="text-red-650 text-xs font-bold mt-1 uppercase">
+                  <p className="text-red-655 text-xs font-bold mt-1 uppercase">
                     {errors.kharifCashAccount.message}
                   </p>
                 )}
@@ -593,7 +600,7 @@ export const EditUser: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
-                  Kharif Kind Account Number *
+                  Kharif Kind Account Number
                 </label>
                 <input
                   type="text"
@@ -607,7 +614,7 @@ export const EditUser: React.FC = () => {
                   }}
                 />
                 {errors.kharifKindAccount && (
-                  <p className="text-red-650 text-xs font-bold mt-1 uppercase">
+                  <p className="text-red-655 text-xs font-bold mt-1 uppercase">
                     {errors.kharifKindAccount.message}
                   </p>
                 )}
@@ -615,7 +622,7 @@ export const EditUser: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
-                  Rabi Cash Account Number *
+                  Rabi Cash Account Number
                 </label>
                 <input
                   type="text"
@@ -629,7 +636,7 @@ export const EditUser: React.FC = () => {
                   }}
                 />
                 {errors.rabiCashAccount && (
-                  <p className="text-red-650 text-xs font-bold mt-1 uppercase">
+                  <p className="text-red-655 text-xs font-bold mt-1 uppercase">
                     {errors.rabiCashAccount.message}
                   </p>
                 )}
@@ -637,7 +644,7 @@ export const EditUser: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase">
-                  Rabi Kind Account Number *
+                  Rabi Kind Account Number
                 </label>
                 <input
                   type="text"
@@ -651,7 +658,7 @@ export const EditUser: React.FC = () => {
                   }}
                 />
                 {errors.rabiKindAccount && (
-                  <p className="text-red-650 text-xs font-bold mt-1 uppercase">
+                  <p className="text-red-655 text-xs font-bold mt-1 uppercase">
                     {errors.rabiKindAccount.message}
                   </p>
                 )}

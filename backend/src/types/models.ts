@@ -26,10 +26,10 @@ export interface IUser extends Document {
   aadhar: string;
   pan: string;
   samagraId?: string;
-  kharifCashAccount: string;
-  kharifKindAccount: string;
-  rabiCashAccount: string;
-  rabiKindAccount: string;
+  kharifCashAccount?: string;
+  kharifKindAccount?: string;
+  rabiCashAccount?: string;
+  rabiKindAccount?: string;
   jila: string;
   tehsil: string;
   gao: string;

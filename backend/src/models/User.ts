@@ -72,10 +72,10 @@ const userSchema = new Schema<IUser>(
     },
     kharifCashAccount: {
       type: String,
-      required: [true, "Kharif Cash Account is required"],
+      required: false,
       validate: {
         validator: function (v: string) {
-          return /^\d{9,18}$/.test(v);
+          return !v || /^\d{9,18}$/.test(v);
         },
         message: "Kharif Cash Account must be between 9 and 18 digits",
       },
@@ -83,10 +83,10 @@ const userSchema = new Schema<IUser>(
     },
     kharifKindAccount: {
       type: String,
-      required: [true, "Kharif Kind Account is required"],
+      required: false,
       validate: {
         validator: function (v: string) {
-          return /^\d{9,18}$/.test(v);
+          return !v || /^\d{9,18}$/.test(v);
         },
         message: "Kharif Kind Account must be between 9 and 18 digits",
       },
@@ -94,10 +94,10 @@ const userSchema = new Schema<IUser>(
     },
     rabiCashAccount: {
       type: String,
-      required: [true, "Rabi Cash Account is required"],
+      required: false,
       validate: {
         validator: function (v: string) {
-          return /^\d{9,18}$/.test(v);
+          return !v || /^\d{9,18}$/.test(v);
         },
         message: "Rabi Cash Account must be between 9 and 18 digits",
       },
@@ -105,10 +105,10 @@ const userSchema = new Schema<IUser>(
     },
     rabiKindAccount: {
       type: String,
-      required: [true, "Rabi Kind Account is required"],
+      required: false,
       validate: {
         validator: function (v: string) {
-          return /^\d{9,18}$/.test(v);
+          return !v || /^\d{9,18}$/.test(v);
         },
         message: "Rabi Kind Account must be between 9 and 18 digits",
       },
